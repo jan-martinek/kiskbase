@@ -1,0 +1,40 @@
+{block title}{_messages.app.table}: {$tableName}{/block}
+
+{block breadcrumbs}
+	<li><a n:href="Table:default">{_messages.app.tables}</a></li>
+	<li class="current"><a>{$tableName}</a></li>
+{/block}
+
+{block content}
+	<div id="content" class="columns">		
+		<table class="livedata tablesorter" data-table="{$tableName}">
+			{foreach $data as $row}
+				{first}
+					<thead><tr>
+						<th n:foreach="$row as $name => $cell" n:if="$name!='id'">
+							{$name}
+						</th>
+					</tr></thead>
+					<tbody> 
+				{/first}
+				<tr data-id="{$row->id}">
+					<td n:foreach="$row as $name => $cell" n:if="$name!='id'"
+						{if isset($fieldOptions[$name])}data-enumerable-options="{$fieldOptions[$name]}"{/if}
+						contenteditable="true"
+						data-column="{$name}">
+						{$cell}
+					</td>
+				</tr>
+				{last}
+					</tbody><tr data-id="new">
+						<td n:foreach="$row as $name => $cell"  n:if="$name!='id'" data-column="{$name}">
+							
+						</td>
+					</tr>
+				{/last}
+			{/foreach}
+		</table>
+	</div>
+{/block}
+
+

@@ -1,0 +1,27 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# http://nette.org/security-warning
+#
+parameters:
+	leanmapper:
+		driver: mysqli
+		host: localhost
+		username: ***
+		password: ***
+		database: ***
+	acceptedDomains: any
+
+php:
+	date.timezone: Europe/Prague
+
+translation:
+	default: cs
+	fallback: [cs_CZ, cs]
+
+google:
+	clientId: ***
+	clientSecret: ***
+	returnUri: ':Login:'(do=googleLogin-response) # /login?do=googleLogin-response
+
+includes:
+	- config.app.neon

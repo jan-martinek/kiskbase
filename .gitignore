@@ -1,0 +1,8 @@
+log/*
+temp/*
+vendor/*
+www/bower_components/*
+config.neon
+!.gitignore
+!.htaccess
+!web.config

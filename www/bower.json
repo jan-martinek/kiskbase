@@ -1,0 +1,32 @@
+{
+  "name": "kiskbase",
+  "version": "0.1",
+  "homepage": "https://github.com/jan-martinek/kiskbase",
+  "authors": [
+    "Jan Martinek <info@jan-martinek.com>"
+  ],
+  "description": "Simple KB",
+  "main": "index.php",
+  "keywords": [
+    "kb",
+    "knowledge",
+    "base"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "zurb/bower-foundation#~5.5.1",
+    "jquery.atwho": "~1.1.0",
+    "medium-editor": "~4.6.0",
+    "nette.ajax.js": "~2.0.0",
+    "fontawesome": "~4.3.0",
+    "highlightjs": "*",
+    "tablesorter": "*"
+  }
+}

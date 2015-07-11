@@ -1,0 +1,25 @@
+{block editorUi}
+	<a n:href="save! $entry->id" class="small button" id="editor-save">
+		<i class="fa fa-floppy-o"></i> 
+		{_messages.kb.saveButton.save}
+	</a> 
+{/block}
+
+{block header}
+	<h1 id="question" contenteditable="true">{$entry->question->text}</h1>
+{/block}
+
+{block title}{_messages.kb.kb} {$entry->id}: {$entry->question->text}{/block}
+
+{block breadcrumbs}
+	<li><a n:href="default $entry->id">{_messages.kb.kb} {$entry->id}</a></li>
+	<li class="current"><a>{_messages.kb.editingMode}</a></li>
+{/block}
+
+{block content}
+	<div class="columns">
+		<div id="answer" contenteditable="true">
+			{!$entry->answer->text}
+		</div>
+	</div>
+{/block}

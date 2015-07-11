@@ -1,0 +1,27 @@
+{block title}{_messages.app.tables}{/block}
+
+{block breadcrumbs}
+	<li class="current"><a>{_messages.app.tables}</a></li>
+{/block}
+
+{block content}
+<div class="columns">
+	{foreach $tables as $tableName => $table}
+		<h2><a n:href="Table:table $tableName">{$tableName}</a></h2>
+		<table>
+			<tr>
+				<th>{_messages.table.field}</th>
+				<th>{_messages.table.type}</th>
+				<th>{_messages.table.comment}</th>
+			</tr>
+			<tr n:foreach="$table as $column">
+				<td>{$column->Field}</td>
+				<td>{$column->Comment}</td>
+				<td>{$column->Type}</td>
+			</tr>
+		</table>
+	{/foreach}
+</div>
+{/block}
+
+

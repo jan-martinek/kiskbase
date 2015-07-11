@@ -1,0 +1,48 @@
+{block editorUi}
+	<a n:href="edit $entry->id" class="small button" id="load-editor">
+		<i class="fa fa-pencil-square-o"></i> 
+		{_messages.kb.saveButton.edit}
+	</a> 
+{/block}
+
+{block title}{_messages.kb.kb} {$entry->id}: {$entry->question->text}{/block}
+
+{block breadcrumbs}
+	<li class="current">{_messages.kb.kb} {$entry->id}</li>
+{/block}
+
+{block content}
+	<div class="columns">
+		<div id="answer">
+			{if !trim($entry->answer->text)}
+				<p class="empty">{_messages.kb.emptyEntry}</p>
+			{/if}
+			{!$entry->answer->text|renderKb:$presenter}
+			
+		</div>
+	</div>
+	<div class="columns">
+		<hr>
+		<dl>
+			<dt>{_messages.kb.editor}<dt> 
+			<dd>{$entry->editor->name}</dd>
+			<dt>{_messages.kb.authoredBy}<dt>
+			<dd>{$entry->answer->created_at|date:'j. n. Y'}, {$entry->answer->authoredBy->name}</dd>
+		</dl>	
+	</div>
+	<div id="related" class="columns">
+		<h2>{_messages.kb.relatedEntries}</h2>
+		{if $related}	
+			<ul>
+				<li n:foreach="$related as $entry">
+					<a n:href="Kb:default $entry->id">{$entry->question->text}</a> 
+					{foreach $entry->tags as $tag}
+					<a n:href="Search:tag $tag->text" class="hashtag">#{$tag->text}</a>{sep}, {/sep}
+					{/foreach}
+				</li>
+			</ul>
+		{else}
+			<p>{_messages.kb.noRelatedEntries}</p>
+		{/if}
+	</div>
+{/block}

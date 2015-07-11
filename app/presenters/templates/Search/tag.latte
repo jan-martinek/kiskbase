@@ -1,0 +1,19 @@
+{block title}{_messages.app.entriesTagged}: {$tag->text}{/block}
+
+{block header}<h1>{_messages.app.entriesTagged}: {$tag->text}</h1>{/block}
+
+{block content}
+<div id="results" class="columns">
+	{if !count($entries)}
+		<p>{_messages.app.noResults}</p>
+	{/if}
+
+	<ul>
+		<li n:foreach="$entries as $entry">
+			<a n:href="Kb:default $entry->id">KB {$entry->id}: {$entry->question->text}</a>
+		</li>
+	</ul>
+</div>
+{/block}
+
+

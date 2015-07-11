@@ -1,0 +1,24 @@
+{block breadcrumbs}<li class="current"><a>{_messages.kb.newKb}</a></li>{/block}
+
+{block header}
+	<a n:href="createNew!" class="small button" id="editor-save">{_messages.kb.saveButton.save}</a> 
+	<h1 id="question" contenteditable="true">?</h1>
+{/block}
+
+{block title}{_messages.kb.newKb}{/block}
+
+{block new}{/block}
+
+{block content}
+	<div id="answer" class="columns" style="display: none">
+	</div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) { 
+			console.log(document.getElementById('question').focus());
+		});		
+	</script>
+
+{/block}
+
+

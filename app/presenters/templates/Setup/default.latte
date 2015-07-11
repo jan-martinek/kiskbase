@@ -1,0 +1,15 @@
+{block title}{_messages.app.setup.setup}{/block}
+
+{block content}
+<div class="columns">
+
+	{!$report}
+
+	{if $success}
+		<p>{_messages.app.setup.everythingWasWell}</p>
+		<a class="button success" n:href="Homepage:default">{_messages.app.setup.goHome} &rarr;</a>
+	{else}
+		<a class="button" n:href="Setup:install">{_messages.app.setup.install}</a>
+	{/if}
+</div>
+{/block}

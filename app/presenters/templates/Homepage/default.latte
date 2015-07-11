@@ -1,0 +1,32 @@
+{block title}{_messages.app.dashboard}{/block}
+
+{block content}
+<div id="content" class="columns">		
+	<div class="row">
+		<div class="columns large-8">
+			<h2>{_messages.app.allEntries}</h2>
+			<ul>
+				<li n:foreach="$entries as $entry" n:ifset="$entry->question->text">
+					KB {$entry->id}: <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="columns large-4">
+			<h2>{_messages.app.allTags}</h2>
+			<ul>
+				<li n:foreach="$tags as $tag">
+					<a n:href="Search:tag $tag->text">{$tag->text}</a>
+				</li>
+			</ul>
+			
+			
+			<h2>{_messages.app.allTables}</h2>
+			<ul>
+				<li n:foreach="$tables as $table">
+					<a n:href="Table:table $table">{$table}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{/block}

@@ -1,0 +1,28 @@
+{block title}{_messages.app.search}: {$query}{/block}
+
+{block header}<h1>{_messages.app.search}: {$query}</h1>{/block}
+
+{block content}
+<div id="results" class="columns">
+	{if !count($tags) && !count($entries)}
+		<p>{_messages.app.noResults}</p>
+	{/if}
+
+	{if count($tags)}
+	<p>{_messages.app.tags}: 
+	{foreach $tags as $tag}		
+		<a href="{link Search:default $tag->text}">{$tag->text}</a> 
+		({$tag->count}){if !$iterator->last}, {/if}
+	{/foreach}
+	</p>
+	{/if}
+
+	<ul>
+		<li n:foreach="$entries as $entry">
+			<a n:href="Kb:default $entry->id">KB {$entry->id}: {$entry->question->text}</a>
+		</li>
+	</ul>
+</div>
+{/block}
+
+

@@ -1,0 +1,68 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>{ifset title}{include title|striptags} | {/ifset}{_messages.app.name}</title>
+
+    <link rel="stylesheet" href="{$baseUri}/bower_components/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/style.css">
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+    <meta name="viewport" content="width=device-width">
+    {block head}{/block}
+</head>
+
+<body>
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="{link Homepage:default}">{_messages.app.name}</a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+        </section>
+    </nav>
+
+
+    <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+    
+    <header class="row">
+            <div class="columns">
+                {block header}<h1>{block title}{/block}</h1>{/block}
+            </div>
+    </header>
+    
+    <div id="content" class="row">
+        {include content}
+    </div>
+    <div class="row">
+    <p style="float: right; margin: 0 0 100px; height: 1.6em; line-height: 1.6em; background: #888; color: white; padding: 0 4px; float: right; ">
+        <strong>@kiskbase</strong>
+    </p>
+    </div>
+    
+
+    {block scripts}
+    <script src="{$baseUri}/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{$baseUri}/bower_components/foundation/js/foundation.min.js"></script>
+    <script src="{$baseUri}/bower_components/nette-forms/src/assets/netteForms.js"></script>
+    <script src="{$baseUri}/js/main.js"></script>
+    <script>
+        KiskBase.translations = {l}
+            edit: {_messages.kb.saveButton.edit},
+            saving: {_messages.kb.saveButton.saving},
+            saved: {_messages.kb.saveButton.saved},
+            save: {_messages.kb.saveButton.save},
+            error: {_messages.kb.saveButton.error},
+        {r}
+    </script>
+    {/block}
+</body>
+</html>
