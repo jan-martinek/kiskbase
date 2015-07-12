@@ -13,6 +13,7 @@ app:
 	allTables: "Všechny tabulky"
 	freshlyUpdated: "Nedávno aktualizované otázky"
 	loginNeeded: "Obsah není dostupný pro nepřihlášené uživatele. Prosím, přihlašte se pomocí svého účtu."
+	confirmedUsersOnly: "Pouze pro potvrzené uživatele."
 	login: "přihlásit se"
 	loginViaGoogle: "Přihlásit se pomocí Google"
 	logout: "odhlásit se"

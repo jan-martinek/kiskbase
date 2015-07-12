@@ -3,11 +3,11 @@
 {block content}
 	<div class="columns">
 	<p><br><i class="fa fa-exclamation-triangle"></i> {_messages.app.loginNeeded}</p>
-	<p><a n:href="googleLogin-open!">{_messages.app.loginViaGoogle}</a>
+	<p><a n:href="googleLogin-open!" class="button">{_messages.app.loginViaGoogle}</a>
 		{if !$userCreationAllowed}{_messages.app.confirmedUsersOnly}{/if}
 	</p>
 	{if $presenter->context->parameters['debugMode']}
-		<p><a n:href="fakeLogin!">{_messages.app.fakeLogin}</a></p>
+		<p><a n:href="fakeLogin!" class="button secondary">{_messages.app.fakeLogin}</a></p>
 	{/if}
 	</div>
 {/block}

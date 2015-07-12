@@ -13,6 +13,7 @@ app:
 	allTables: "All tables"
 	freshlyUpdated: "Recently updated"
 	loginNeeded: "Login is required. Please sign in."
+	confirmedUsersOnly: "Confirmed users only."
 	login: "Log in"
 	loginViaGoogle: "Log in via Google account"
 	logout: "Log out"
