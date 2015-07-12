@@ -42,21 +42,22 @@ class LoginPresenter extends BasePresenter
 			$google = $dialog->getGoogle();
 
 			if (!$google->getUser()) {
-				$self->flashMessage("Sorry, Google authentication failed.");
+				$self->flashMessage("Sorry, Google authentication failed (1).");
 				$self->redirect('Login:default');
 				return;
 			}
 			
 			try {
 				$me = $google->getProfile();
-
-				if (!$existing = $self->userRepository->findByGoogleId($google->getUser()) 
-					&& $self->userRepository->isUserCreationAllowed()) {
-					$existing = $self->userRepository->registerFromGoogle($google->getUser(), $me);
-				} else {
-					$self->flashMessage("Sorry, Google authentication failed.");
-					$self->redirect('Login:default');
-					return;
+				$existing = $self->userRepository->findByEmail($me->email);
+				if (!$existing) { 
+					if ($self->userRepository->isUserCreationAllowed()) {
+						$existing = $self->userRepository->registerFromGoogle($google->getUser(), $me);
+					} else {
+						$self->flashMessage("Sorry, Google authentication failed (2).");
+						$self->redirect('Login:default');
+						return;
+					}
 				}
 
 				$self->userRepository->updateGoogleAccessToken($google->getUser(), serialize($google->getAccessToken()));

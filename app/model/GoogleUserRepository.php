@@ -26,6 +26,23 @@ class GoogleUserRepository extends Repository {
 		}
 	}
 
+	public function findByEmail($email) 
+	{
+		if ($info = $this->connection->query("SELECT * FROM [user] WHERE [email] = %s", $email)->fetch()) {
+			return (object) array(
+				'id' => $info->id,
+				'roles' => array(),
+				'name' => $info->name,
+				'surname' => $info->surname,
+				'email' => $info->email,
+				'googleId' => $info->google_id,
+				'picture' => $info->picture,
+			);
+		} else {
+			return false;
+		}
+	}
+
 	public function registerFromGoogle($user, $me) 
 	{
 		$this->connection->query("INSERT INTO [user]", array(
