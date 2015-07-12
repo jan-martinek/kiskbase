@@ -15,7 +15,6 @@ services:
 	- Model\Repository\QuestionRepository
 	- Model\Repository\TagRepository
 	- Model\Repository\UserRepository
-	- Model\Repository\GoogleUserRepository
 	- Model\Entity\Entry
 	- Model\Entity\Answer
 	- Model\Entity\Question
@@ -24,14 +23,14 @@ services:
 	- Model\TableManager
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter
+	googleUserRepository: 
+		class: Model\Repository\GoogleUserRepository
+		setup:
+			- allowUserCreation(%userCreationAllowed%)
 	kbFilter: App\Model\KbFilter
 	nette.latteFactory:
 		setup:
 			- addFilter(renderKb, [@kbFilter, process])
-	KbPresenter:
-		class: App\Presenters\KbPresenter
-		setup:
-			- setAcceptedDomains(%acceptedDomains%)
 
 extensions:
 	translation: Kdyby\Translation\DI\TranslationExtension

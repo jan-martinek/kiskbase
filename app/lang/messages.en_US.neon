@@ -15,7 +15,6 @@ app:
 	loginNeeded: "Login is required. Please sign in."
 	login: "Log in"
 	loginViaGoogle: "Log in via Google account"
-	onlyDomainUsers: "only domain users"
 	logout: "Log out"
 	fakeLogin: "Fake login for testing purposes (localhost)"
 	setup:

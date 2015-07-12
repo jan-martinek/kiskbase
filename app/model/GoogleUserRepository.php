@@ -6,8 +6,11 @@ namespace Model\Repository;
  * Users management.
  */
 class GoogleUserRepository extends Repository {
+	
+	private $userCreationAllowed = false;
 
-	public function findByGoogleId($user) {
+	public function findByGoogleId($user) 
+	{
 		if ($info = $this->connection->query("SELECT * FROM [user] WHERE [google_id] = %s", $user)->fetch()) {
 			return (object) array(
 				'id' => $info->id,
@@ -23,7 +26,8 @@ class GoogleUserRepository extends Repository {
 		}
 	}
 
-	public function registerFromGoogle($user, $me) {
+	public function registerFromGoogle($user, $me) 
+	{
 		$this->connection->query("INSERT INTO [user]", array(
 			"name" => $me->name,
 			"surname" => $me->familyName,
@@ -35,7 +39,16 @@ class GoogleUserRepository extends Repository {
 		return $this->findByGoogleId($user);
 	}
 
-	public function updateGoogleAccessToken($user, $token) {
+	public function updateGoogleAccessToken($user, $token) 
+	{
 		return $this->connection->query('UPDATE [user] SET [google_access_token] = %s', $token, 'WHERE [google_id] = %s', $user);
+	}
+	
+	public function allowUserCreation($bool) {
+		$this->userCreationAllowed = $bool ? true : false;
+	}
+	
+	public function isUserCreationAllowed() {
+		return $this->userCreationAllowed;
 	}
 }

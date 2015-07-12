@@ -15,7 +15,6 @@ app:
 	loginNeeded: "Obsah není dostupný pro nepřihlášené uživatele. Prosím, přihlašte se pomocí svého účtu."
 	login: "přihlásit se"
 	loginViaGoogle: "Přihlásit se pomocí Google"
-	onlyDomainUsers: "pouze v doméně"
 	logout: "odhlásit se"
 	fakeLogin: "Falešný login pro testovací účely"
 	setup:

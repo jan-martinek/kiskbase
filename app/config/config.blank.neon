@@ -9,7 +9,7 @@ parameters:
 		username: ***
 		password: ***
 		database: ***
-	acceptedDomains: any
+	userCreationAllowed: false
 
 php:
 	date.timezone: Europe/Prague

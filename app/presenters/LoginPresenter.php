@@ -4,6 +4,8 @@ namespace App\Presenters;
 
 use Model\Repository\GoogleUserRepository;
 use Nette\Application\UI\Form;
+use Nette\Security\Identity;
+use Kdyby\Google\Dialog\LoginDialog;
 
 class LoginPresenter extends BasePresenter {
 
@@ -14,8 +16,13 @@ class LoginPresenter extends BasePresenter {
 	public $userRepository;
 	
 	public function handleFakeLogin() {
+	public function renderDefault() 
+	{
+		$this->template->userCreationAllowed = $this->userRepository->isUserCreationAllowed();
+	}
+	
 		if ($this->context->parameters['debugMode']) {
-			$this->user->login(new \Nette\Security\Identity(1, array(), array(
+			$this->user->login(new Identity(1, array(), array(
 				'id' => 1,
 				'roles' => array(),
 				'name' => 'FakeLogin'))
@@ -26,25 +33,27 @@ class LoginPresenter extends BasePresenter {
 
 	/** @return \Kdyby\Google\Dialog\LoginDialog */
 	protected function createComponentGoogleLogin() {
-		$dialog = new \Kdyby\Google\Dialog\LoginDialog($this->google);
+		$dialog = new LoginDialog($this->google);
 		$self = $this;
-		$dialog->onResponse[] = function (\Kdyby\Google\Dialog\LoginDialog $dialog) use ($self) {
+		$dialog->onResponse[] = function (LoginDialog $dialog) use ($self) {
 			$google = $dialog->getGoogle();
 
 			if (!$google->getUser()) {
 				$self->flashMessage("Sorry bro, google authentication failed.");
+				$self->redirect('Login:default');
 				return;
 			}
 
 			try {
 				$me = $google->getProfile();
 
-				if (!$existing = $self->userRepository->findByGoogleId($google->getUser())) {
-					/**
-					 * Variable $me contains all the public information about the user
-					 * including Google id, name and email, if he allowed you to see it.
-					 */
+				if (!$existing = $self->userRepository->findByGoogleId($google->getUser()) 
+					&& $self->userRepository->isUserCreationAllowed()) {
 					$existing = $self->userRepository->registerFromGoogle($google->getUser(), $me);
+				} else {
+					$self->flashMessage("Sorry, Google authentication failed.");
+					$self->redirect('Login:default');
+					return;
 				}
 
 				/**
@@ -54,9 +63,8 @@ class LoginPresenter extends BasePresenter {
 				 * when the user is not logged in to your website,
 				 * with the access token in his session.
 				 */
-				// $self->userRepository->updateGoogleAccessToken($google->getUser(), serialize(value)$google->getAccessToken());
-
-				$self->user->login(new \Nette\Security\Identity($existing->id, $existing->roles, $existing));
+				$self->userRepository->updateGoogleAccessToken($google->getUser(), serialize($google->getAccessToken()));
+				$self->user->login(new Identity($existing->id, $existing->roles, $existing));
 
 			} catch (\Exception $e) {
 				/**

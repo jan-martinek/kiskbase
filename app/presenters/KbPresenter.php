@@ -166,9 +166,4 @@ class KbPresenter extends BasePresenter
 		$this->flashMessage('Informace byly uloženy.');
 		$this->redirect('this');
 	}
-	
-	public function setAcceptedDomains($domains) 
-	{
-		$this->acceptedDomains = $domains;
-	}
 }
