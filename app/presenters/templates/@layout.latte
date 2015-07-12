@@ -47,7 +47,7 @@
                     <li><a href="#"><i class="fa fa-user"></i> {$user->getIdentity()->name}</a>
                     <li class="active"><a href="{link logout!}">{_messages.app.logout}</a></li>
                 {else}
-                    <a n:href="Login:default">{_messages.app.login}</a>
+                    <li><a n:href="Login:default">{_messages.app.login}</a></li>
                 {/if}
             </ul>
             

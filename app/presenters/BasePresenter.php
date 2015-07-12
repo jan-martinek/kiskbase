@@ -20,15 +20,17 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 	/** @var \Kdyby\Translation\Translator @inject */
 	public $translator;
 
-	public function startup() {		
+	public function startup() 
+	{
 		parent::startup();
 
 		if (!$this->user->isLoggedIn() && !($this->getName() === 'Login')) {
 			$this->redirect('Login:default');
-		}		
+		}
 	}
 
-	protected function createTemplate($class = NULL) {
+	protected function createTemplate($class = NULL) 
+	{
 		$template = parent::createTemplate($class);
 
 		$this->translator->createTemplateHelpers()
@@ -37,7 +39,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 		return $template;
 	}
 
-	protected function createComponentSearchForm() {
+	protected function createComponentSearchForm() 
+	{
 		$form = new Form;
 		$form->addText('query', $this->translator->translate('messages.app.search'))
 		     ->setAttribute('placeholder', $this->translator->translate('messages.app.search'));
@@ -50,11 +53,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 		return $form;
 	}
 
-	public function searchFormSucceeded(Form $form, $values) {
+	public function searchFormSucceeded(Form $form, $values) 
+	{
 		$this->redirect(':Search:default', $values->query);
 	}
 
-	public function handleLogout() {
+	public function handleLogout() 
+	{
 		$user = $this->getUser();
 		$user->logout();
 		$this->redirect('Homepage:default');
