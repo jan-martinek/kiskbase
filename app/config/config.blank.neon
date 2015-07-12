@@ -10,13 +10,14 @@ parameters:
 		password: ***
 		database: ***
 	userCreationAllowed: false
+	questionOpenings: "Who,What,Where,Why,When,How"
 
 php:
 	date.timezone: Europe/Prague
 
 translation:
-	default: cs
-	fallback: [cs_CZ, cs]
+	default: en
+	fallback: [en_US, en]
 
 google:
 	clientId: ***

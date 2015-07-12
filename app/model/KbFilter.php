@@ -8,7 +8,7 @@ use Tracy\Debugger;
 class KbFilter extends \Nette\Object {
 	private $queries;
 	private $text;
-	private $questionStartsWith = 'Jak|Co|Na koho|Koho|Kdo|Kde|S jakým|Kam|Z čeho';
+	private $questionOpenings = array('What');
 
 	/** @var \DibiConnection @inject */
 	public $db;
@@ -37,12 +37,16 @@ class KbFilter extends \Nette\Object {
 		$el->setHtml($this->text);
 		return $el;
 	}
+	
+	public function setQuestionOpenings($openings) {
+		$this->questionOpenings = explode(',', $openings);
+	}
 
 	public function activateQuestions() {
 		$questions = $this->db->query('SELECT [entry_id], [text] FROM [question]')->fetchPairs('entry_id', 'text');
 
 		$replacements = array();
-		preg_match_all('/((' . $this->questionStartsWith . ') [^<>\?]+?\?)/', $this->text, $matches);
+		preg_match_all('/((' . implode('|', $this->questionOpenings) . ') [^<>\?]+?\?)/', $this->text, $matches);
 		foreach ($matches[0] as $question) {
 			if (in_array($question, $questions)) {
 				$link = $this->presenter->link('default', array_search($question, $questions));

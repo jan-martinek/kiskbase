@@ -27,7 +27,10 @@ services:
 		class: Model\Repository\GoogleUserRepository
 		setup:
 			- allowUserCreation(%userCreationAllowed%)
-	kbFilter: App\Model\KbFilter
+	kbFilter: 
+		class: App\Model\KbFilter
+		setup:
+			- setQuestionOpenings(%questionOpenings%)
 	nette.latteFactory:
 		setup:
 			- addFilter(renderKb, [@kbFilter, process])
