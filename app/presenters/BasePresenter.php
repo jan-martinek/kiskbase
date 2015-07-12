@@ -11,9 +11,6 @@ use DibiConnection;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-    /** @var DibiConnection @inject */
-    public $db;
-
     /** @persistent */
     public $locale;
 

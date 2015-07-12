@@ -88,4 +88,9 @@ class TableManager extends Nette\Object
         }
     }
     
+    public function saveValue($table, $column, $id, $data) {
+        $this->connection->query("SET sql_mode = 'STRICT_ALL_TABLES';");
+        $this->connection->query("UPDATE [$table] SET [$column] = %s", $data, 'WHERE [id] = %i', $id);
+    }
+    
 }

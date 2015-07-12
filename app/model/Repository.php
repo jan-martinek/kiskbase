@@ -38,9 +38,5 @@ class QuestionRepository extends Repository
 {
 }
 
-/**
- * @table entry_tag
- */
-class TagInfoRepository extends Repository
 {
 }

@@ -48,7 +48,7 @@ class TablePresenter extends BasePresenter
     }
 
 
-    /**
+   /**
      * @return Nette\Application\UI\Form
      */
     protected function createComponentNewItemForm()
@@ -81,16 +81,16 @@ class TablePresenter extends BasePresenter
             }
         }
         $form->addSubmit('save', $this->translator->translate('messages.table.createItem'));
+        $form->onSuccess[] = array($this, 'newItemFormSucceeded');
         
-        $form->onSuccess[] = function ($form) 
-        {
-            $values = (array) $form->getValues();
-            $id = $this->tableManager->createRow($this->tableName, $values);
-            $this->flashMessage($this->translator->translate('messages.table.newItemCreated'));
-            $this->redirect('Table:table#rowId' . $id, $this->tableName);
-        };
-
         return $form;
+    }
+    
+    public function newItemFormSucceeded($form) {
+        $values = (array) $form->getValues();
+        $id = $this->tableManager->createRow($this->tableName, $values);
+        $this->flashMessage($this->translator->translate('messages.table.newItemCreated'));
+        $this->redirect('Table:table#rowId' . $id, $this->tableName);
     }
 
     public function handleSaveData()
@@ -102,9 +102,9 @@ class TablePresenter extends BasePresenter
         $id = trim($httpRequest->getPost('id'));
 
         $httpResponse = $this->context->getService('httpResponse');
-        $this->db->query("SET sql_mode = 'STRICT_ALL_TABLES';");
+
         try {
-            $this->db->query("UPDATE [$table] SET [$column] = %s", $data, 'WHERE [id] = %i', $id);
+            $this->tableManager->saveValue($table, $column, $id, $data);
         } catch (Exception $e) {
             $httpResponse->setCode(\Nette\Http\Response::S403_FORBIDDEN);
             $this->terminate();
