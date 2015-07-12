@@ -116,7 +116,7 @@ class KbPresenter extends BasePresenter
 		$entry->question = $question;
 		$this->entryRepository->persist($entry);
 		
-		preg_match_all('/#(\w*[A-Za-z_]+\w*)/', strip_tags($answer->text), $tags);
+		preg_match_all('/#([\p{L}-]+)/u', $answer->text, $tags);
 		$this->saveTags($entry, $tags[1]);
 		
 		if ($httpRequest->isAjax()) {

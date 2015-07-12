@@ -42,7 +42,7 @@ class KbFilter extends \Nette\Object {
 		$questions = $this->db->query('SELECT [entry_id], [text] FROM [question]')->fetchPairs('entry_id', 'text');
 
 		$replacements = array();
-		preg_match_all('/((' . $this->questionStartsWith . ')[^?]+\?)/', $this->text, $matches);
+		preg_match_all('/((' . $this->questionStartsWith . ') [^<>\?]+?\?)/', $this->text, $matches);
 		foreach ($matches[0] as $question) {
 			if (in_array($question, $questions)) {
 				$link = $this->presenter->link('default', array_search($question, $questions));
