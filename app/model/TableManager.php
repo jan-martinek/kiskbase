@@ -36,4 +36,26 @@ class TableManager extends Nette\Object
 		}
 	}
 	
+	public function getFieldOptions($table) {
+		//enum
+		$tableDescription = $this->connection->query("DESCRIBE [$table]")->fetchAssoc('Field');
+		$fieldOptions = array();
+		foreach ($tableDescription as $column => $field) {
+			if (preg_match('/^enum\((.+)\)$/', $field->Type, $matches)) {
+				$fieldOptions[$column] = $matches[1];
+			}
+		}
+		
+		//foreign keys
+		$tableDescription = $this->connection->query("SELECT COLUMN_NAME as [column], REFERENCED_TABLE_NAME as [table] FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+			WHERE TABLE_NAME = '$table' AND COLUMN_NAME LIKE '%_id' AND REFERENCED_COLUMN_NAME = 'id'")->fetchPairs('column', 'table');
+		foreach ($tableDescription as $column => $table) {
+			if (count($this->connection->query("SHOW COLUMNS FROM [$table] LIKE 'name';"))) {
+				$fieldOptions[$column] = ':' . $table;
+			}
+		}
+		
+		return $fieldOptions;
+	}
+	
 }

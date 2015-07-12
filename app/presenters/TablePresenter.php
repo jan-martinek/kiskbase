@@ -28,28 +28,10 @@ class TablePresenter extends BasePresenter {
 		}
 		
 		$this->template->tableName = $table;
+		$this->template->tableInfo = $this->tableManager->getTableInfo($table);
 		$this->template->data = $this->db->query("SELECT * FROM [$table]")->fetchAll();
+		$this->template->fieldOptions = $this->tableManager->getFieldOptions($table);
 		
-		
-		//enum
-		$tableDescription = $this->db->query("DESCRIBE [$table]")->fetchAssoc('Field');
-		$fieldOptions = array();
-		foreach ($tableDescription as $column => $field) {
-			if (preg_match('/^enum\((.+)\)$/', $field->Type, $matches)) {
-				$fieldOptions[$column] = $matches[1];
-			}
-		}
-		
-		//foreign keys
-		$tableDescription = $this->db->query("SELECT COLUMN_NAME as [column], REFERENCED_TABLE_NAME as [table] FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-			WHERE TABLE_NAME = '$table' AND COLUMN_NAME LIKE '%_id' AND REFERENCED_COLUMN_NAME = 'id'")->fetchPairs('column', 'table');
-		foreach ($tableDescription as $column => $table) {
-			if (count($this->db->query("SHOW COLUMNS FROM [$table] LIKE 'name';"))) {
-				$fieldOptions[$column] = ':' . $table;
-			}
-		}
-		
-		$this->template->fieldOptions = $fieldOptions;
 	}
 	
 	public function handleSaveData() {

@@ -53,3 +53,4 @@ table:
 	field: "sloupec"
 	type: "typ"
 	comment: "poznámka"
+	showDetails: "Zobrazit informace o tabulce"

@@ -53,3 +53,4 @@ table:
 	field: "column"
 	type: "type"
 	comment: "comment"
+	showDetails: "Show table details"

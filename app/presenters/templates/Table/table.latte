@@ -6,7 +6,21 @@
 {/block}
 
 {block content}
-	<div id="content" class="columns">		
+	<div id="content" class="columns">
+		<span class="label secondary" onclick="$(this).next().toggle(); return false;"><a>{_messages.table.showDetails}</a></span>
+		<table style="display: none">
+			<tr>
+				<th>{_messages.table.field}</th>
+				<th>{_messages.table.type}</th>
+				<th>{_messages.table.comment}</th>
+			</tr>
+			<tr n:foreach="$tableInfo as $column">
+				<td>{$column->Field}</td>
+				<td>{$column->Comment}</td>
+				<td>{$column->Type}</td>
+			</tr>
+		</table>
+	
 		<table class="livedata tablesorter" data-table="{$tableName}">
 			{foreach $data as $row}
 				{first}
