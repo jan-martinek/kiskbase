@@ -15,7 +15,7 @@
 			<h2>{_messages.app.allTags}</h2>
 			<ul>
 				<li n:foreach="$tags as $tag">
-					<a n:href="Search:tag $tag->text">{$tag->text}</a>
+					<a n:href="Search:tag $tag->text">{$tag->text}</a> ({count($tag->entries)})
 				</li>
 			</ul>
 			
