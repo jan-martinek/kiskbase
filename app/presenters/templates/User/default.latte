@@ -1,0 +1,26 @@
+{block title}{_messages.app.user}{/block}
+
+{block content}
+<div id="content" class="columns">		
+	<div class="row">
+		<div class="columns large-8">
+			<h2>{_messages.user.myEntries}</h2>
+			<ul>
+				<li n:foreach="$me->editorOf as $entry" n:ifset="$entry->question->text">
+					KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="columns large-4">
+			<h2>{_messages.user.myChecklists}</h2>
+			<ul>
+				<li n:foreach="$me->checklists as $checklist">
+					X{$checklist->id} <a n:href="Checklist:default $checklist->id">{$checklist->name}</a>
+				</li>
+			</ul>
+
+			
+		</div>
+	</div>
+</div>
+{/block}

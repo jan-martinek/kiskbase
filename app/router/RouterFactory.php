@@ -26,6 +26,7 @@ class RouterFactory
         $router[] = new Route('/table/<table>', 'Table:table');
         $router[] = new Route('/table/<table>/new/', 'Table:newItem');
         $router[] = new Route('/login', 'Login:default');
+        $router[] = new Route('/user', 'User:default');
         $router[] = new Route('/api/<action>', 'Api:default');
         $router[] = new Route('/setup/<action>', 'Setup:default');
 
