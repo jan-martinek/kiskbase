@@ -49,14 +49,22 @@ class TableManager extends Nette\Object
         }
     }
 
+    public function getEnumValues($fieldType) {
+        if (preg_match('/^enum\((.+)\)$/', $fieldType, $matches)) {
+            return $matches[1];
+        } else {
+            return false;
+        }
+    }
+
     public function getFieldOptions($table)
     {
         //enum
         $tableDescription = $this->connection->query("DESCRIBE [$table]")->fetchAssoc('Field');
         $fieldOptions = array();
         foreach ($tableDescription as $column => $field) {
-            if (preg_match('/^enum\((.+)\)$/', $field->Type, $matches)) {
-                $fieldOptions[$column] = $matches[1];
+            if ($values = $this->getEnumValues($field->Type)) {
+                $fieldOptions[$column] = $values;
             }
         }
 
@@ -71,4 +79,13 @@ class TableManager extends Nette\Object
 
         return $fieldOptions;
     }
+    
+    public function createRow($table, $values) {
+        if ($this->connection->query("INSERT INTO [$table]", $values)) {
+            return $this->connection->insertId;
+        } else {
+            return false;
+        }
+    }
+    
 }

@@ -54,3 +54,7 @@ table:
 	type: "type"
 	comment: "comment"
 	showDetails: "Show table details"
+	addNewItem: "Add new %itemName%"
+	newItem: "New %itemName%"
+	createItem: "Create item"
+	newItemCreated: "Item has been successfuly created"

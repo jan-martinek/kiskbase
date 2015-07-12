@@ -54,3 +54,7 @@ table:
 	type: "typ"
 	comment: "poznámka"
 	showDetails: "Zobrazit informace o tabulce"
+	addNewItem: "Přidat nový záznam (%itemName%)"
+	newItem: "Nový záznam (%itemName%)"
+	createItem: "Vytvořit záznam"
+	newItemCreated: "Záznam byl vytvořen"

@@ -31,7 +31,7 @@
 					</tr></thead>
 					<tbody> 
 				{/first}
-				<tr data-id="{$row->id}">
+				<tr data-id="{$row->id}" id="rowId{$row->id}">
 					<td n:foreach="$row as $name => $cell" n:if="$name!='id'"
 						{if isset($fieldOptions[$name])}data-enumerable-options="{$fieldOptions[$name]}"{/if}
 						contenteditable="true"
@@ -39,15 +39,9 @@
 						{$cell}
 					</td>
 				</tr>
-				{last}
-					</tbody><tr data-id="new">
-						<td n:foreach="$row as $name => $cell"  n:if="$name!='id'" data-column="{$name}">
-							
-						</td>
-					</tr>
-				{/last}
 			{/foreach}
 		</table>
+		<p><a n:href="Table:newItem $tableName">{_messages.table.addNewItem, array(itemName => $tableName)}</a></p>
 	</div>
 {/block}
 

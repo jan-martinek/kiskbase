@@ -1,0 +1,27 @@
+{block title}{_messages.table.newItem, array('itemName' => $tableName)}{/block}
+
+{block breadcrumbs}
+	<li><a n:href="Table:default">{_messages.app.tables}</a></li>
+	<li><a n:href="Table:table $tableName">{$tableName}</a></li>
+	<li class="current"><a>{_messages.table.newItem, array('itemName' => $tableName)}</a></li>
+{/block}
+
+{block content}
+	<div class="columns">
+		{form newItemForm}
+			<div class="row" n:foreach="$form->controls as $name => $field" n:if="!in_array($name, array('do', 'save'))">
+				<div class="columns large-6">
+					<p>
+						<span class="alert" n:ifcontent>{inputError $name}</span>
+						{label $name /}{input $name}
+						{dump $field}
+					</p>
+				</div>
+				<div class="columns large-6">
+					<p><br>{$field->getOption('description')}</p>
+				</div>
+			</div>
+			{input 'save', 'class' => 'button'}
+		{/form}
+	</div>
+{/block}

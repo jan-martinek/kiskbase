@@ -24,6 +24,7 @@ class RouterFactory
         $router[] = new Route('/tag/<tagText>', 'Search:tag');
         $router[] = new Route('/table/', 'Table:default');
         $router[] = new Route('/table/<table>', 'Table:table');
+        $router[] = new Route('/table/<table>/new/', 'Table:newItem');
         $router[] = new Route('/login', 'Login:default');
         $router[] = new Route('/api/<action>', 'Api:default');
         $router[] = new Route('/setup/<action>', 'Setup:default');
