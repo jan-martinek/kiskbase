@@ -24,4 +24,13 @@ class TagRepository extends Repository
 			return false;
 		}
 	}
+	
+	public function purge() {
+		$ids = $this->connection->query('SELECT group_concat(tag.id)
+			FROM tag
+        	LEFT JOIN entry_tag 
+            ON tag.id = entry_tag.tag_id
+			WHERE entry_tag.tag_id IS NULL')->fetchSingle();
+		if ($ids) $this->connection->query('DELETE FROM tag WHERE id IN (' . $ids . ')');
+	}
 }

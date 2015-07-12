@@ -148,6 +148,7 @@ class KbPresenter extends BasePresenter
 			$entry->removeFromTags($tag);
 		}
 		$this->entryRepository->persist($entry);
+		$this->tagRepository->purge();
 	}
 
 	protected function createComponentAnswerForm() 
