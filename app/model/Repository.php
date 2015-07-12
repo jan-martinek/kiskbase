@@ -18,13 +18,14 @@ abstract class Repository extends \LeanMapper\Repository
 		return $this->createEntity($row);
 	}
 
-	public function findAll()
+	public function findAll($orderBy = null)
 	{
-		return $this->createEntities(
-			$this->connection->select('*')
-				->from($this->getTable())
-				->fetchAll()
-		);
+		$query = $this->connection->select('*')
+				->from($this->getTable());
+		if ($orderBy) {
+			$query->orderBy($orderBy);
+		}
+		return $this->createEntities($query->fetchAll());
 	}
 
 }
