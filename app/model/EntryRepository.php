@@ -4,24 +4,24 @@ namespace Model\Repository;
 
 class EntryRepository extends Repository
 {
-	public function lookup($query) {
-		$q = array(
-			'answer.text%~like~' => $query,
-			'question.text%~like~' => $query
-		);
-		
-		return $this->createEntities(
-			$this->connection->query('SELECT [entry.*] FROM [entry]
-				JOIN [answer] ON [entry.answer_id] = [answer.id]
-				JOIN [question] ON [entry.question_id] = [question.id]
-				WHERE %or', $q)->fetchAll()
-		);
-	}
-	
-	public function lookupRelated($entry) 
-	{	
-		$rows = $this->connection->query(
-			'SELECT [entry.*]
+    public function lookup($query)
+    {
+        $q = array(
+            'answer.text%~like~' => $query,
+            'question.text%~like~' => $query,
+        );
+
+        return $this->createEntities($this->connection->query('SELECT [entry.*] FROM [entry]
+            JOIN [answer] ON [entry.answer_id] = [answer.id]
+            JOIN [question] ON [entry.question_id] = [question.id]
+            WHERE %or', $q)->fetchAll()
+        );
+    }
+
+    public function lookupRelated($entry)
+    {
+        $rows = $this->connection->query(
+            'SELECT [entry.*]
 			FROM [entry_tag]
 				JOIN [tag] ON ([tag.id] = [entry_tag.tag_id])
 				JOIN [entry] ON [entry_tag.entry_id] = [entry.id]
@@ -30,6 +30,7 @@ class EntryRepository extends Repository
 			GROUP BY [entry_tag.entry_id]
 			ORDER BY COUNT(*) DESC
 			LIMIT 0, 10')->fetchAll();
-		return $this->createEntities($rows);
-	}
+
+        return $this->createEntities($rows);
+    }
 }

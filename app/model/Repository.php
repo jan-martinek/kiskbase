@@ -4,47 +4,43 @@ namespace Model\Repository;
 
 abstract class Repository extends \LeanMapper\Repository
 {
+    public function find($id)
+    {
+        $row = $this->connection->select('*')
+            ->from($this->getTable())
+            ->where('id = %i', $id)
+            ->fetch();
 
-	public function find($id)
-	{
-		$row = $this->connection->select('*')
-			->from($this->getTable())
-			->where('id = %i', $id)
-			->fetch();
+        if ($row === false) {
+            throw new \Exception('Entity was not found.');
+        }
 
-		if ($row === false) {
-			throw new \Exception('Entity was not found.');
-		}
-		return $this->createEntity($row);
-	}
+        return $this->createEntity($row);
+    }
 
-	public function findAll($orderBy = null)
-	{
-		$query = $this->connection->select('*')
-				->from($this->getTable());
-		if ($orderBy) {
-			$query->orderBy($orderBy);
-		}
-		return $this->createEntities($query->fetchAll());
-	}
+    public function findAll($orderBy = null)
+    {
+        $query = $this->connection->select('*')
+                ->from($this->getTable());
+        if ($orderBy) {
+            $query->orderBy($orderBy);
+        }
 
+        return $this->createEntities($query->fetchAll());
+    }
 }
 
 class AnswerRepository extends Repository
 {
-
 }
 
 class QuestionRepository extends Repository
 {
-
 }
 
 /**
-	* @table entry_tag
-	*/
+ * @table entry_tag
+ */
 class TagInfoRepository extends Repository
 {
-	
 }
-

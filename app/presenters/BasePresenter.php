@@ -9,59 +9,60 @@ use DibiConnection;
 /**
  * Base presenter for all application presenters.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter {
-	
-	/** @var DibiConnection @inject */
-	public $db;
-	
-	/** @persistent */
-	public $locale;
+abstract class BasePresenter extends Nette\Application\UI\Presenter
+{
+    /** @var DibiConnection @inject */
+    public $db;
 
-	/** @var \Kdyby\Translation\Translator @inject */
-	public $translator;
+    /** @persistent */
+    public $locale;
 
-	public function startup() 
-	{
-		parent::startup();
+    /** @var \Kdyby\Translation\Translator @inject */
+    public $translator;
 
-		if (!$this->user->isLoggedIn() && !($this->getName() === 'Login')) {
-			$this->redirect('Login:default');
-		}
-	}
+    public function startup()
+    {
+        parent::startup();
 
-	protected function createTemplate($class = NULL) 
-	{
-		$template = parent::createTemplate($class);
+        if (!$this->user->isLoggedIn() && !($this->getName() === 'Login')) {
+            $this->redirect('Login:default');
+        }
+    }
 
-		$this->translator->createTemplateHelpers()
-		     ->register($template->getLatte());
+    protected function createTemplate($class = null)
+    {
+        $template = parent::createTemplate($class);
 
-		return $template;
-	}
+        $this->translator->createTemplateHelpers()
+             ->register($template->getLatte());
 
-	protected function createComponentSearchForm() 
-	{
-		$form = new Form;
-		$form->addText('query', $this->translator->translate('messages.app.search'))
-		     ->setAttribute('placeholder', $this->translator->translate('messages.app.search'));
-		$form->addSubmit('submit', $this->translator->translate('messages.app.performSearch'));
-		$form->onSuccess[] = array($this, 'searchFormSucceeded');
+        return $template;
+    }
 
-		if (isset($this->params['query'])) {
-			$form['query']->setDefaultValue($this->params['query']);
-		}
-		return $form;
-	}
+    protected function createComponentSearchForm()
+    {
+        $form = new Form();
+        $form->addText('query', $this->translator->translate('messages.app.search'))
+             ->setAttribute('placeholder', $this->translator->translate('messages.app.search'));
+        $form->addSubmit('submit', $this->translator->translate('messages.app.performSearch'));
+        $form->onSuccess[] = array($this, 'searchFormSucceeded');
 
-	public function searchFormSucceeded(Form $form, $values) 
-	{
-		$this->redirect(':Search:default', $values->query);
-	}
+        if (isset($this->params['query'])) {
+            $form['query']->setDefaultValue($this->params['query']);
+        }
 
-	public function handleLogout() 
-	{
-		$user = $this->getUser();
-		$user->logout();
-		$this->redirect('Homepage:default');
-	}
+        return $form;
+    }
+
+    public function searchFormSucceeded(Form $form, $values)
+    {
+        $this->redirect(':Search:default', $values->query);
+    }
+
+    public function handleLogout()
+    {
+        $user = $this->getUser();
+        $user->logout();
+        $this->redirect('Homepage:default');
+    }
 }
