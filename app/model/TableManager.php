@@ -28,7 +28,17 @@ class TableManager extends Nette\Object
 		return $tables;
 	}
 	
-	public function getTableInfo($table) {
+	public function getData($table, $assoc = null) {
+		$query = $this->connection->query("SELECT * FROM [$table]");
+		if ($assoc) {
+			return $query->fetchAssoc($assoc);
+		} else {
+			return $query->fetchAll();	
+		}
+		
+	}
+	
+	public function getInfo($table) {
 		if (!in_array($table, $this->restrictedTables)) {
 			return $this->connection->query("SHOW FULL COLUMNS FROM [$table]")->fetchAll();
 		} else {

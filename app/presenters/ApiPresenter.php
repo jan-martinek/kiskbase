@@ -8,6 +8,10 @@ use Nette\Application\Responses\JsonResponse;
  * Homepage presenter.
  */
 class ApiPresenter extends BasePresenter {
+
+	/** @var \Model\TableManager @inject */
+	public $tableManager;
+
 	
 	/** @var \Model\Repository\TagRepository @inject */
 	public $tagRepository;
@@ -16,8 +20,10 @@ class ApiPresenter extends BasePresenter {
 
 	}
 
-	public function actionSql($query) {
-
+	public function actionTable($table) {
+		$data = $this->tableManager->getData($table, 'id');
+		//$this->sendResponse(new JsonResponse(array('sfd','sd')));
+		$this->sendResponse(new JsonResponse($data));	
 	}
 
 	public function actionTags() {
@@ -31,35 +37,8 @@ class ApiPresenter extends BasePresenter {
 	}
 
 	public function actionPeople() {
-		$people = array(
-			"Petr Škyřík",
-			"Alžběta Strnadová",
-			"Kateřina Blatná",
-			"Markéta Bočková",
-			"Tomáš Bouda",
-			"Michal Černý",
-			"Hana Habermannová",
-			"Adam Hazdra",
-			"Kateřina Hošková",
-			"Dagmar Chytková",
-			"Alžběta Karolyiová",
-			"Michaela Kortyšová",
-			"Pavla Kovářová",
-			"Michal Lorenz",
-			"Jan Martinek",
-			"Pavlína Mazáčová",
-			"Pavla Minaříková",
-			"Jiří Stodola",
-			"Tereza Stodolová",
-			"Gabriela Šimková",
-			"Alexandra Škyříková",
-			"Alžběta Škytová",
-			"Iva Zadražilová",
-			"Ladislava Zbiejczuk Suchá",
-			"Jiří Zeman",
-			"Jan Zikuška",
-		);
-
+		$data = $this->tableManager->getData('person', 'name');
+		$people = array_keys($data);
 		$this->sendResponse(new JsonResponse($people));
 	}
 

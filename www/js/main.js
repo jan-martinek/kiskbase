@@ -1,6 +1,8 @@
 "use strict";
 
 var KiskBase = {
+	baseUri: '',
+	
 	init: function() {
 		$.nette.init();
 		
@@ -35,11 +37,11 @@ var KiskBase = {
 
 			$('#answer').atwho({
 			    at: "@",
-			    data: '/www/api/people',
+			    data: KiskBase.baseUri + '/api/people',
 			    insertTpl: '${atwho-at}${name}'
 			}).atwho({
 			    at: "#",
-			    data: '/www/api/tags',
+			    data: KiskBase.baseUri + '/api/tags',
 			    insertTpl: '${atwho-at}${name}'
 			});	
 

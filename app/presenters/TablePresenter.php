@@ -18,7 +18,7 @@ class TablePresenter extends BasePresenter {
 		
 		$this->template->tables = array();
 		foreach ($tables as $table) {
-			$this->template->tables[$table] = $this->tableManager->getTableInfo($table);
+			$this->template->tables[$table] = $this->tableManager->getInfo($table);
 		}
 	}
 
@@ -28,8 +28,8 @@ class TablePresenter extends BasePresenter {
 		}
 		
 		$this->template->tableName = $table;
-		$this->template->tableInfo = $this->tableManager->getTableInfo($table);
-		$this->template->data = $this->db->query("SELECT * FROM [$table]")->fetchAll();
+		$this->template->tableInfo = $this->tableManager->getInfo($table);
+		$this->template->data = $this->tableManager->getData($table);
 		$this->template->fieldOptions = $this->tableManager->getFieldOptions($table);
 		
 	}
