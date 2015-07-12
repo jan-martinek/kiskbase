@@ -12,8 +12,6 @@ class TablePresenter extends BasePresenter
     /** @var \Model\TableManager @inject */
     public $tableManager;
 
-    private $restrictedTables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user');
-
     public function renderDefault()
     {
         $tables = $this->tableManager->findAllTables();
@@ -26,7 +24,7 @@ class TablePresenter extends BasePresenter
 
     public function renderTable($table)
     {
-        if (in_array($table, $this->restrictedTables)) {
+        if ($this->tableManager->isRestricted($table)) {
             throw new BadRequestException('Application tables are not publicly accessible.', 403);
         }
 

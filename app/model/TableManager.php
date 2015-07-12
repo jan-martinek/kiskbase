@@ -9,11 +9,16 @@ class TableManager extends Nette\Object
     /** @var \DibiConnection @inject */
     public $connection;
 
-    private $restrictedTables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user');
+    private $restrictedTables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user', 'checklist');
 
     public function __construct(\DibiConnection $connection)
     {
         $this->connection = $connection;
+    }
+
+    public function isRestricted($table) 
+    {
+        return in_array($table, $this->restrictedTables);
     }
 
     public function findAllTables()
