@@ -55,6 +55,10 @@ class KbPresenter extends BasePresenter
     public function renderNew()
     {
     }
+    
+    public function renderPrint() {
+        $this->template->entries = $this->entryRepository->findAll();
+    }
 
     public function handleCreateNew($question)
     {

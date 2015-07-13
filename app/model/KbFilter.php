@@ -26,6 +26,7 @@ class KbFilter extends \Nette\Object
 
     public function process($text, $presenter)
     {
+        $this->queries = array();
         $this->text = $text;
         $this->presenter = $presenter;
 

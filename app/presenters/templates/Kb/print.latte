@@ -1,0 +1,31 @@
+{block title}Print{/block}
+
+{block content}
+	<style>
+		@media print {
+			.top-bar, header, #frm-searchForm {
+				display: none;
+			}
+			.row, .columns {
+				float: none;
+			}
+		    h2 { 
+		    	page-break-before: always; 
+		   	}
+		    table {
+		    	page-break-inside: avoid
+		    }
+		}
+	</style>
+	<div class="columns">
+		<div n:foreach="$entries as $entry">
+			{continueIf !$entry->question}
+			{continueIf !$entry->answer}
+			<h2>{_messages.kb.kb} {$entry->id}: {$entry->question->text}</h2>
+			{if !trim($entry->answer->text)}
+				<p class="empty">{_messages.kb.emptyEntry}</p>
+			{/if}
+			{!$entry->answer->text|renderKb:$presenter}
+		</div>
+	</div>
+{/block}
