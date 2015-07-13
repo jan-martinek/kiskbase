@@ -15,7 +15,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
 
     public function renderDefault()
     {
-        $tables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user', 'example_course');
+        $tables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user', 'example_course', 'checklist');
 
         $success = true;
         $report = array();
@@ -180,7 +180,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
           `code` varchar(20) COLLATE $collate NOT NULL COMMENT 'official ID of the course',
           `name` varchar(255) COLLATE $collate NOT NULL,
           PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=$collate;");
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=$collate;");
 
         $this->connection->query("INSERT IGNORE INTO `example_course` (`id`, `type`, `grade`, `spec`, `code`, `name`) VALUES
           (1,   'A',    'bachelor', '', 'XYZ101',   'Science 101'),
@@ -195,7 +195,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
         $this->connection->query("INSERT IGNORE INTO `entry` (`id`, `guarantor_id`, `question_id`, `answer_id`, `public`, `access`, `removed`) VALUES
           (1,   1,  1,  1,  0,  '', 0)");
         $this->connection->query("INSERT IGNORE INTO `question` (`id`, `entry_id`, `user_id`, `created_at`, `text`, `current`) VALUES
-          (1,   1,  1,  '2015-07-11 18:24:59',  'Why is this KB so cool?',  0)");
+          (1,   1,  1,  '2015-07-11 18:24:59',  'What makes this KB so cool?',  0)");
         $this->connection->query("INSERT IGNORE INTO `answer` (`id`, `entry_id`, `user_id`, `created_at`, `text`, `current`) VALUES
           (1,   1,  1,  '2015-07-11 18:24:59',  '<p>It enables you to bring text and tabular data together.</p>
             <p>You can write use #hashtags (#sic) and mention people (from custom table).</p>
@@ -204,6 +204,17 @@ class SetupPresenter extends Nette\Application\UI\Presenter
             <ul><li>but even lists</li><li>and other <strong>beautiful</strong> things</li></ul>
             <p>Try out the editor by clicking on the <i>edit</i> button.</p>
             <p>#example</p>',1)");
+        
+        //example tags
+        $this->connection->query("INSERT INTO `entry_tag` (`entry_id`, `tag_id`) VALUES
+          (1, 1),
+          (1, 2),
+          (1, 3);");
+
+        $this->connection->query("INSERT INTO `tag` (`id`, `text`) VALUES
+          (3, 'example'),
+          (1, 'hashtags'),
+          (2, 'sic');");
 
         //example person
         $this->connection->query("INSERT IGNORE INTO `person` (`id`, `name`) VALUES (1, '$name')");

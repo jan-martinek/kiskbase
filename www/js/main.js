@@ -179,6 +179,10 @@ var KiskBase = {
 		},
 		
 		createLinks: function() {
+			if ($('#answer').attr('contenteditable')) {
+				return false;
+			}
+			
 			$('#answer>ul,#answer>ol').before('<a href="#" class="createChecklist button secondary right">' + KiskBase.translations.createChecklist + ' &rarr;</a>');
 			
 			$('body').on('click', '.createChecklist', function(e) {
