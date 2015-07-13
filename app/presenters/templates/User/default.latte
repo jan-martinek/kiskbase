@@ -1,4 +1,4 @@
-{block title}{_messages.app.user}{/block}
+{block title}{_messages.app.userDashboard, array('user' => $user->getIdentity()->name)}{/block}
 
 {block content}
 <div id="content" class="columns">		

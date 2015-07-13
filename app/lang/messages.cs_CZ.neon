@@ -8,6 +8,7 @@ app:
 	table: Tabulka
 	tables: Databázové tabulky
 	dashboard: "Nástěnka"
+	userDashboard: "%user%"
 	allEntries: "Všechny otázky"
 	allTags: "Všechny tagy"
 	allTables: "Všechny tabulky"
@@ -58,3 +59,11 @@ table:
 	newItem: "Nový záznam (%itemName%)"
 	createItem: "Vytvořit záznam"
 	newItemCreated: "Záznam byl vytvořen"
+user:
+	myEntries: "Spravuji"
+	myChecklists: "Mé checklisty"
+checklist:
+	checklist: Checklist
+	source: "Zdroj checklistu"
+	createChecklist: "vytvořit checklist"
+	nameChecklist: "Pojmenujte nový checklist"

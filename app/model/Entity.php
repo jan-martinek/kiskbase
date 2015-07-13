@@ -39,6 +39,8 @@ class Tag extends \LeanMapper\Entity
 
 /**
  * @property int $id
+ * @property Entry[] $editorOf m:belongsToMany(guarantor_id)
+ * @property Checklist[] $checklists m:belongsToMany(user_id)
  * @property string $name
  * @property string $surname
  * @property string $email
@@ -47,5 +49,21 @@ class Tag extends \LeanMapper\Entity
  * @property string $picture
  */
 class User extends \LeanMapper\Entity
+{
+}
+
+/**
+ * @property int $id
+ * @property User $owner m:hasOne(user_id)
+ * @property Entry $source m:hasOne(entry_id)
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property string $name
+ * @property string $text
+ * @property string $state
+ * @property string $public
+ * @property bool $removed
+ */
+class Checklist extends \LeanMapper\Entity
 {
 }

@@ -9,6 +9,7 @@ use Model\Entity\Entry;
 use Model\Entity\Answer;
 use Model\Entity\Question;
 use Model\Entity\Tag;
+use Model\Entity\Checklist;
 use DateTime;
 
 class KbPresenter extends BasePresenter
@@ -27,6 +28,9 @@ class KbPresenter extends BasePresenter
 
     /** @var \Model\Repository\UserRepository @inject */
     public $userRepository;
+
+    /** @var \Model\Repository\ChecklistRepository @inject */
+    public $checklistRepository;
 
     private $acceptedDomains;
 
@@ -146,21 +150,21 @@ class KbPresenter extends BasePresenter
         $this->entryRepository->persist($entry);
         $this->tagRepository->purge();
     }
+    
+    public function handleCreateChecklist($id) {
+        $httpRequest = $this->context->getByType('Nette\Http\Request');
+        $name = $httpRequest->getPost('name');
+        $data = $httpRequest->getPost('data');
 
-    protected function createComponentAnswerForm()
-    {
-        $form = new Form();
-        $form->addTextarea('answer', 'Odpověď');
-        $form->addHidden('entry_id');
-        $form->addSubmit('save', 'Uložit');
-        $form->onSuccess[] = array($this, 'registrationFormSucceeded');
-
-        return $form;
-    }
-
-    public function registrationFormSucceeded(Form $form, $values)
-    {
-        $this->flashMessage('Informace byly uloženy.');
-        $this->redirect('this');
+        $checklist = new Checklist;
+        $checklist->owner = $this->userRepository->find($this->user->getId());
+        $checklist->source = $this->entryRepository->find($id);
+        $checklist->created_at = new DateTime;
+        $checklist->updated_at = new DateTime;
+        $checklist->name = $name;
+        $checklist->text = $data;
+        $checklistId = $this->checklistRepository->persist($checklist);
+        
+        $this->redirect('Checklist:default', $checklistId);
     }
 }

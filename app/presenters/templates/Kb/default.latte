@@ -11,6 +11,8 @@
 	<li class="current">{_messages.kb.kb} {$entry->id}</li>
 {/block}
 
+{block scripts}<script>KiskBase.ChecklistManager.creationHandlerUri = {link createChecklist!}</script>{/block}
+
 {block content}
 	<div class="columns">
 		<div id="answer">

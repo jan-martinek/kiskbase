@@ -38,5 +38,6 @@ class QuestionRepository extends Repository
 {
 }
 
+class ChecklistRepository extends Repository
 {
 }

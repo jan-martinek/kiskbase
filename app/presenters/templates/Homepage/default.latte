@@ -7,7 +7,7 @@
 			<h2>{_messages.app.allEntries}</h2>
 			<ul>
 				<li n:foreach="$entries as $entry" n:ifset="$entry->question->text">
-					KB {$entry->id}: <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+					KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
 				</li>
 			</ul>
 		</div>

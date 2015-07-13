@@ -6411,4 +6411,10 @@ p .hljs, blockquote .hljs, li .hljs {
   border: 0;
   background: transparent; }
 
+ul.checklist {
+  list-style-type: none; }
+  ul.checklist ul, ul.checklist ol {
+    list-style-type: none;
+    padding-left: 40px; }
+
 /*# sourceMappingURL=style.css.map */

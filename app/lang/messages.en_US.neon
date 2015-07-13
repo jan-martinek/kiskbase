@@ -8,6 +8,7 @@ app:
 	table: Table
 	tables: "Database tables"
 	dashboard: "Dashboard"
+	userDashboard: "%user%"
 	allEntries: "All questions"
 	allTags: "All tags"
 	allTables: "All tables"
@@ -58,3 +59,11 @@ table:
 	newItem: "New %itemName%"
 	createItem: "Create item"
 	newItemCreated: "Item has been successfuly created"
+user:
+	myEntries: "I'm editor at"
+	myChecklists: "My checklists"
+checklist:
+	checklist: "Checklist"
+	source: "Checklist source"
+	createChecklist: "create a checklist"
+	nameChecklist: "Name this checklist"

@@ -10,6 +10,7 @@ var KiskBase = {
 		this.Editor.init();
 		this.Editor.autoSave();
 		this.TableManager.init();
+		this.ChecklistManager.init();
 	},
 	
 	ThirdParty: {
@@ -163,8 +164,75 @@ var KiskBase = {
 				setTimeout(function(){ cell.css({background: "rgba(0, 255, 0, .1)"}); }, 400);
 				setTimeout(function(){ cell.css({background: "transparent"}); }, 900);
 			}).fail(function() {
-				//alert(KiskBase.translations.error);
 				cell.css({background: "rgba(255, 0, 0, .3)"});
+			});
+		}
+	},
+	
+	ChecklistManager: {
+		creationHandlerUri: '',
+		state: [],
+		
+		init: function() {
+			this.createLinks();
+			this.initChecklist();
+		},
+		
+		createLinks: function() {
+			$('#answer>ul,#answer>ol').before('<a href="#" class="createChecklist button secondary right">' + KiskBase.translations.createChecklist + ' &rarr;</a>');
+			
+			$('body').on('click', '.createChecklist', function(e) {
+				var name = prompt(KiskBase.translations.nameChecklist);
+				KiskBase.ChecklistManager.sendCreateRequest($(this).next().html(), name);
+				e.preventDefault();
+			});
+		},
+		
+		sendCreateRequest: function(data, name) {
+			var form = $('<form action="' + this.creationHandlerUri + '" method="post">');
+			$('<input type="hidden" name="data">').attr({value: data}).appendTo(form);
+			$('<input type="hidden" name="name">').attr({value: name}).appendTo(form);
+			form.submit();
+		},
+		
+		initChecklist: function() {
+			if ($('ul.checklist').data('state')) {
+				this.state = $('ul.checklist').data('state').split(',');	
+			}
+
+			$('ul.checklist li').each(function(i, e) {
+				$(this).html($('<label></label>').append('<input type="checkbox" id="checkbox'+i+'"> ').append($(this).html()));
+				
+				if (KiskBase.ChecklistManager.state[i] == 1) { 
+					$(this).find('input').prop('checked', true); 
+				}				
+			});
+			
+			$('body').on('change', 'ul.checklist input', function() {
+				KiskBase.ChecklistManager.saveState();
+			});
+		},
+		
+		saveState: function() {
+			var state = {};
+			$('ul.checklist input[type="checkbox"]').each(function(i, e) {
+				state[i] = $(this).is(':checked');
+			});
+			
+			$.nette.ajax({
+				method: 'POST',
+				cache: false,
+				url: window.location.pathname + '?do=saveState',
+				data: {
+					state: state
+				}
+			}).always(function() {
+				//cell.css({background: "rgba(255, 255, 0, .3)"});
+			}).done(function(response) {
+				//setTimeout(function(){ cell.css({background: "rgba(0, 255, 0, .1)"}); }, 400);
+				//setTimeout(function(){ cell.css({background: "transparent"}); }, 900);
+			}).fail(function() {
+				//cell.css({background: "rgba(255, 0, 0, .3)"});
 			});
 		}
 	}

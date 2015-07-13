@@ -88,9 +88,7 @@
     <div class="row"><div class="columns">
         <a href="https://github.com/jan-martinek/kiskbase" target="_blank" class="button secondary" style="margin-bottom: 100px; float: right; font-weight: bold;">@kiskbase</a>
     </div></div>
-    
 
-    {block scripts}
     <script src="{$baseUri}/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="{$baseUri}/bower_components/foundation/js/foundation.min.js"></script>
     <script src="{$baseUri}/bower_components/nette-forms/src/assets/netteForms.js"></script>
@@ -109,9 +107,11 @@
             saved: {_messages.kb.saveButton.saved},
             save: {_messages.kb.saveButton.save},
             error: {_messages.kb.saveButton.error},
+            createChecklist: {_messages.checklist.createChecklist},
+            nameChecklist: {_messages.checklist.nameChecklist},
         {r};
         KiskBase.baseUri = {$baseUri};
     </script>
-    {/block}
+    {block scripts}{/block}
 </body>
 </html>

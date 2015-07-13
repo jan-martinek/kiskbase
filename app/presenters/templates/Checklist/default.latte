@@ -1,0 +1,18 @@
+{block title}{_messages.checklist.checklist} {$checklist->id}: {$checklist->name}{/block}
+
+{block breadcrumbs}
+	<li><a n:href="User:default">{_messages.user.myChecklists}</a></li>
+	<li class="current">{_messages.checklist.checklist} {$checklist->id}</li>
+{/block}
+
+{block content}
+	<div class="columns">
+		{var state = unserialize($checklist->state)}	
+		<ul class="checklist no-bullet" data-state="{if $state}{foreach $state as $val}{$val==='true'?1:0}{sep},{/sep}{/foreach}{/if}">{!$checklist->text}</ul>
+		
+		<hr>
+		
+		<h2>{_messages.checklist.source}</h2>
+		<p>KB {$checklist->source->id} <a n:href="Kb:default $checklist->source->id">{$checklist->source->question->text}</a></p>
+	</div>
+{/block}
