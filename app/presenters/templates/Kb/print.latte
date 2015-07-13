@@ -9,7 +9,7 @@
 			.row, .columns {
 				float: none;
 			}
-		    h2 { 
+		    h1 { 
 		    	page-break-before: always; 
 		   	}
 		    table {
@@ -21,7 +21,7 @@
 		<div n:foreach="$entries as $entry">
 			{continueIf !$entry->question}
 			{continueIf !$entry->answer}
-			<h2>{_messages.kb.kb} {$entry->id}: {$entry->question->text}</h2>
+			<h1>{_messages.kb.kb} {$entry->id}: {$entry->question->text}</h1>
 			{if !trim($entry->answer->text)}
 				<p class="empty">{_messages.kb.emptyEntry}</p>
 			{/if}
