@@ -127,6 +127,24 @@ class KbPresenter extends BasePresenter
             $this->sendResponse(new JsonResponse(array('success' => true)));
         }
     }
+    
+    public function handleImageUpload($id) {
+        $httpRequest = $this->context->getByType('Nette\Http\Request');
+        
+        $uploadDir = __DIR__ . '/../../www/upload/KB' . $id . '/';
+        $uploadUrl = $httpRequest->url->baseUrl . '/upload/KB' . $id . '/';
+        
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777);
+        }
+        
+        $uploadHandler = new \Model\UploadHandler(array(
+            'upload_dir' => $uploadDir,
+            'upload_url' => $uploadUrl,
+        ));
+        
+        $this->terminate();
+    }
 
     private function saveTags($entry, $tagNames)
     {

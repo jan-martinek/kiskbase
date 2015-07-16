@@ -6417,4 +6417,8 @@ ul.checklist {
     list-style-type: none;
     padding-left: 40px; }
 
+.medium-insert-buttons {
+  margin-left: -65px;
+  opacity: .5; }
+
 /*# sourceMappingURL=style.css.map */

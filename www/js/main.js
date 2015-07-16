@@ -35,6 +35,20 @@ var KiskBase = {
 				secondHeader: 'h3',
 				buttonLabels: 'fontawesome'
 			});	
+			
+			
+			$('#answer[contenteditable]').mediumInsert({
+				editor: mediumEditor,
+				addons: { 
+        			images: { 
+        				preview: false,
+						fileUploadOptions: {
+							url: window.location.pathname + '?do=imageUpload',
+						},
+					},
+				},
+			});
+			
 
 			$('#answer').atwho({
 			    at: "@",
@@ -109,7 +123,6 @@ var KiskBase = {
 			var editor = this;
 
 			var answer = $('#answer').clone();
-			answer.find('[contenteditable=false]').remove();
 
 			$.nette.ajax({
 				method: 'POST',
