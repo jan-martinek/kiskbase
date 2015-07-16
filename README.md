@@ -11,6 +11,7 @@ Smart knowledge base app that blends textual and tabular data. And checklists.
 	- Insert and edit table values right in the app.
 	- Access tables via API.
 - Autocomplete for hashtags and people.
+- Easy images handling in entries.
 - Questions are automatically recognized and made into links (wiki-style).
 - Fulltext search (obviously).
 - Login with Google account.
@@ -32,5 +33,6 @@ You need a server environment with PHP & MySQL.
 2. Get dependencies via composer and bower
 3. Rename config.blank.neon to config.neon and fill the google & database info
 4. Set documentroot to path/to/app/www/
+5. Make path/to/app/www/upload writable
 5. Run /setup and click that button
 6. That should do it! (yes, these instructions are very brief, sorry)
