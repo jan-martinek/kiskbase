@@ -58,6 +58,11 @@ var KiskBase = {
 			    at: "#",
 			    data: KiskBase.baseUri + '/api/tags',
 			    insertTpl: '${atwho-at}${name}'
+			}).atwho({
+			    at: "KB",
+			    data: KiskBase.baseUri + '/api/questions',
+			    displayTpl: "<li>KB ${id} <strong>${question}</strong></li>",
+			    insertTpl: '${question}'
 			});	
 
 			editor.renderButton('success');

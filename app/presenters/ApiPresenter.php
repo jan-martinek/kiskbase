@@ -9,6 +9,9 @@ use Nette\Application\Responses\JsonResponse;
  */
 class ApiPresenter extends BasePresenter
 {
+    /** @var \Model\Repository\EntryRepository @inject */
+    public $entryRepository;
+    
     /** @var \Model\TableManager @inject */
     public $tableManager;
 
@@ -42,5 +45,17 @@ class ApiPresenter extends BasePresenter
         $data = $this->tableManager->getData('person', 'name');
         $people = array_keys($data);
         $this->sendResponse(new JsonResponse($people));
+    }
+    
+    public function actionQuestions()
+    {
+        $entries = $this->entryRepository->findAll();
+        $questions = array();
+        foreach ($entries as $entry) {
+            if ($entry->question) {
+                $questions[] = array('id' => $entry->id, 'question' => $entry->question->text);    
+            }
+        }
+        $this->sendResponse(new JsonResponse($questions));
     }
 }
