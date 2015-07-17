@@ -1,6 +1,6 @@
 # KiskBase
 
-Smart knowledge base app that blends textual and tabular data. And checklists.
+Smart knowledge base app that blends linear and tabular data. And checklists.
 
 ## Features
 
