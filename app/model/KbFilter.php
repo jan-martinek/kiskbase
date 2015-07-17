@@ -32,9 +32,10 @@ class KbFilter extends \Nette\Object
 
         $this->markSql();
         $this->insertResults();
+        $this->activateHashtags();
         $this->activateSql();
         $this->activateQuestions();
-        $this->activateHashtags();
+        
 
         $el = Html::el();
         $el->setHtml($this->text);
@@ -70,12 +71,22 @@ class KbFilter extends \Nette\Object
     public function activateSql()
     {
         $replacements = array();
-        preg_match_all('#\(select.+?;\)#i', $this->text, $matches);
+        preg_match_all('#\((select.+?;)\)#i', $this->text, $matches);
 
-        foreach ($matches[0] as $i => $query) {
+        foreach ($matches[1] as $i => $query) {
             $queryNo = $i + 1;
+            $query = strip_tags($query);
 
-            $replacements[$query] = '<strong>['.$this->translator->translate('messages.sqlRender.seeQueryNo', null, array('queryNo' => $queryNo)).']</strong>';
+            if (mb_strlen($query) > 40) {
+                $content = '&#8203;SELECT&hellip;';
+            } else {
+                $content = '&#8203;' . $query;
+            }
+            $content .= ' <a href="#queryNo'.$queryNo.'">&rarr; ' 
+                . $this->translator->translate('messages.sqlRender.seeQueryNo', null, array('queryNo' => $queryNo))
+                . '</a>';
+
+            $replacements[$matches[0][$i]] = '<span title="'.htmlentities($query).'">('.$content.')</span>';
         }
 
         $this->text = strtr($this->text, $replacements);
@@ -118,7 +129,7 @@ class KbFilter extends \Nette\Object
                 $output = $query->result;
             }
 
-            $output = '<div class="sqlRender queryNo'.$queryNo.'">'
+            $output = '<div class="sqlRender" id="queryNo'.$queryNo.'">'
                 .'<span class="label info">'.$headline.'</span>'
                 .' <span class="label secondary" onclick="$(this).next().toggle(); return false;"><a>'.$this->translator->translate('messages.sqlRender.showQueryDetails').'</a></span>'
                 .'<div class="panel queryDetails" style="display: none">'
