@@ -10,7 +10,7 @@
 					<strong>{if $namespaceName === '_none'}{_messages.kb.noNamespaceGiven}{else}{$namespaceName}{/if}</strong>
 					<ul>
 						<li n:foreach="$namespace as $entry" n:ifset="$entry->question->text">
-							KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+							KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->extractTextWithoutNamespace()}</a>
 						</li>
 					</ul>
 				</li>

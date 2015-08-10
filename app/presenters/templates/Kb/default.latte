@@ -7,6 +7,8 @@
 
 {block title}{_messages.kb.kb} {$entry->id}: {$entry->question->text}{/block}
 
+{block header}<h1>{$entry->question->text}</h1>{/block}
+
 {block breadcrumbs}
 	<li class="current">{_messages.kb.kb} {$entry->id}</li>
 {/block}
