@@ -94,6 +94,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
           `guarantor_id` int(11) NOT NULL,
           `question_id` int(11) DEFAULT NULL,
           `answer_id` int(11) DEFAULT NULL,
+          `namespace` varchar(30) COLLATE $collate NULL,
           `public` tinyint(1) unsigned NOT NULL DEFAULT '0',
           `access` enum('private','public') COLLATE $collate NOT NULL DEFAULT 'private',
           `removed` int(1) unsigned NOT NULL DEFAULT '0',

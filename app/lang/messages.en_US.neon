@@ -36,6 +36,7 @@ kb:
 	relatedEntries: "Related entries"
 	noRelatedEntries: "No related entries found."
 	emptyEntry: "This answer is empty."
+	noNamespaceGiven: "Without namespace"
 	saveButton:
 		edit: "edit"
 		saving: "saving&hellip;"

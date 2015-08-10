@@ -8,6 +8,7 @@ namespace Model\Entity;
  * @property Tag[] $tags m:hasMany
  * @property Question|NULL $question m:hasOne
  * @property Answer|NULL $answer m:hasOne
+ * @property string|NULL $namespace
  * @property string $access
  * @property bool $removed
  */

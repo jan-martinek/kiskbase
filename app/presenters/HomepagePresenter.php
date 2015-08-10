@@ -18,7 +18,7 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $this->template->entries = $this->entryRepository->findAll();
+        $this->template->entries = $this->entryRepository->findAllAssocByNamespace();    
         $this->template->tags = $this->tagRepository->findAll('text');
         $this->template->tables = $this->tableManager->findAllTables();
     }

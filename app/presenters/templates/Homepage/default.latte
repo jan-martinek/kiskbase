@@ -6,8 +6,13 @@
 		<div class="columns large-8">
 			<h2>{_messages.app.allEntries}</h2>
 			<ul>
-				<li n:foreach="$entries as $entry" n:ifset="$entry->question->text">
-					KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+				<li n:foreach="$entries as $namespaceName => $namespace">
+					<strong>{if $namespaceName === '_none'}{_messages.kb.noNamespaceGiven}{else}{$namespaceName}{/if}</strong>
+					<ul>
+						<li n:foreach="$namespace as $entry" n:ifset="$entry->question->text">
+							KB {$entry->id} <a n:href="Kb:default $entry->id">{$entry->question->text}</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</div>

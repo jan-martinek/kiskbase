@@ -26,6 +26,21 @@ class Answer extends \LeanMapper\Entity
  */
 class Question extends \LeanMapper\Entity
 {
+    public function extractNamespace() {
+        if (preg_match('/^([^\s\:]{1,30}):\s(.+)$/', $this->text, $matches)) {
+            return $matches[1];
+    } else {
+            return '';
+        }
+    }
+    
+    public function extractTextWithoutNamespace() {
+        if (preg_match('/^([^\s\:]{1,30}):\s(.+)$/', $this->text, $matches)) {
+            return $matches[2];
+    } else {
+            return $this->text;
+        }
+    }
 }
 
 /**

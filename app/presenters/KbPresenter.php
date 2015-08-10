@@ -118,6 +118,7 @@ class KbPresenter extends BasePresenter
 
         $entry->answer = $answer;
         $entry->question = $question;
+        $entry->namespace = $question->extractNamespace();
         $this->entryRepository->persist($entry);
 
         preg_match_all('/#([\p{L}-]+)/u', $answer->text, $tags);

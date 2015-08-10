@@ -36,6 +36,7 @@ kb:
 	relatedEntries: "Související otázky"
 	noRelatedEntries: "Nebyly nalezeny žádné související otázky."
 	emptyEntry: "Tento záznam je zatím prázdný."
+	noNamespaceGiven: "Bez kategorie"
 	saveButton:
 		edit: "upravit"
 		saving: "ukládám&hellip;"

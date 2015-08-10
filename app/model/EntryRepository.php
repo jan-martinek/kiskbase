@@ -4,6 +4,23 @@ namespace Model\Repository;
 
 class EntryRepository extends Repository
 {
+    
+    public function findAllAssocByNamespace() {
+        $result = $this->createEntities($this->connection->query('SELECT [entry.*] FROM [entry]
+            WHERE [removed] = 0')->fetchAll()
+        ); 
+        
+        $namespacedResult = array();
+            
+        foreach ($result as $entry) {
+            $namespacedResult[$entry->namespace ? $entry->namespace : '_none'][] = $entry;
+        }
+        
+        ksort($namespacedResult);
+        
+        return $namespacedResult;
+    }
+    
     public function lookup($query)
     {
         $q = array(
