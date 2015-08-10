@@ -12,16 +12,20 @@ class KbFilter extends \Nette\Object
 
     /** @var \DibiConnection @inject */
     public $db;
+    
+    /** @var \Model\TableManager @inject */
+    public $tableManager;
 
     /** @var \Kdyby\Translation\Translator @inject */
     public $translator;
 
     private $presenter;
 
-    public function __construct(\DibiConnection $db, \Kdyby\Translation\Translator $translator)
+    public function __construct(\DibiConnection $db, \Kdyby\Translation\Translator $translator, \Model\TableManager $tableManager)
     {
         $this->db = $db;
         $this->translator = $translator;
+        $this->tableManager = $tableManager;
     }
 
     public function process($text, $presenter)
@@ -33,6 +37,7 @@ class KbFilter extends \Nette\Object
         $this->markSql();
         $this->insertResults();
         $this->activateHashtags();
+        $this->activatePeopleNames();
         $this->activateSql();
         $this->activateQuestions();
         
@@ -99,6 +104,18 @@ class KbFilter extends \Nette\Object
 
         foreach ($matches[1] as $tag) {
             $replacements['#'.$tag] = '<a class="hashtag" href="'.$this->presenter->link('Search:tag', $tag).'">#'.$tag.'</a>';
+        }
+
+        $this->text = strtr($this->text, $replacements);
+    }
+    
+    public function activatePeopleNames()
+    {
+        $names = array_keys($this->tableManager->getData('person', 'name'));
+        
+        $replacements = array();
+        foreach ($names as $name) {
+            $replacements['@' . $name] = '<a class="hashtag" href="'.$this->presenter->link('Search:default', '@' . $name).'">@'.$name.'</a>';
         }
 
         $this->text = strtr($this->text, $replacements);
