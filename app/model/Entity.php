@@ -54,7 +54,7 @@ class Tag extends \LeanMapper\Entity
 
 /**
  * @property int $id
- * @property Entry[] $editorOf m:belongsToMany(guarantor_id)
+ * @property Entry[] $editorOf m:belongsToMany(editor_id)
  * @property Checklist[] $checklists m:belongsToMany(user_id)
  * @property string $name
  * @property string $surname

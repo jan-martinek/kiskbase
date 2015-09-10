@@ -91,7 +91,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
         }
         $this->connection->query("CREATE TABLE IF NOT EXISTS `entry` (
           `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-          `guarantor_id` int(11) NOT NULL,
+          `editor_id` int(11) NOT NULL,
           `question_id` int(11) DEFAULT NULL,
           `answer_id` int(11) DEFAULT NULL,
           `namespace` varchar(30) COLLATE $collate NULL,
@@ -99,10 +99,10 @@ class SetupPresenter extends Nette\Application\UI\Presenter
           `access` enum('private','public') COLLATE $collate NOT NULL DEFAULT 'private',
           `removed` int(1) unsigned NOT NULL DEFAULT '0',
           PRIMARY KEY (`id`),
-          KEY `guarantor_id` (`guarantor_id`),
+          KEY `editor_id` (`editor_id`),
           KEY `answer_id` (`answer_id`),
           KEY `question_id` (`question_id`),
-          CONSTRAINT `entry_ibfk_4` FOREIGN KEY (`guarantor_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
+          CONSTRAINT `entry_ibfk_4` FOREIGN KEY (`editor_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
           CONSTRAINT `entry_ibfk_5` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
           CONSTRAINT `entry_ibfk_6` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=$collate;");
@@ -193,7 +193,7 @@ class SetupPresenter extends Nette\Application\UI\Presenter
             (1, '$name',    '', '$email',   '', '', '')");
 
         // example entry
-        $this->connection->query("INSERT IGNORE INTO `entry` (`id`, `guarantor_id`, `question_id`, `answer_id`, `public`, `access`, `removed`) VALUES
+        $this->connection->query("INSERT IGNORE INTO `entry` (`id`, `editor_id`, `question_id`, `answer_id`, `public`, `access`, `removed`) VALUES
           (1,   1,  1,  1,  0,  '', 0)");
         $this->connection->query("INSERT IGNORE INTO `question` (`id`, `entry_id`, `user_id`, `created_at`, `text`, `current`) VALUES
           (1,   1,  1,  '2015-07-11 18:24:59',  'What makes this KB so cool?',  0)");

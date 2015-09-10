@@ -4,7 +4,7 @@ namespace Model\Entity;
 
 /**
  * @property int $id
- * @property User $editor m:hasOne(guarantor_id)
+ * @property User $editor m:hasOne(editor_id)
  * @property Tag[] $tags m:hasMany
  * @property Question|NULL $question m:hasOne
  * @property Answer|NULL $answer m:hasOne
