@@ -29,7 +29,7 @@ app:
 kb:
 	kb: "KB" 
 	kiskbase: "KiskBase"
-	newKb: "New question"
+	newEntry: "New question"
 	editor: "Editor of this entry"
 	authoredBy: "Last update"
 	editingMode: "Edit"

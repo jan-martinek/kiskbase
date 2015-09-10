@@ -19,7 +19,7 @@
 
 	<ul>
 		<li n:foreach="$entries as $entry">
-			<a n:href="Kb:default $entry->id">KB {$entry->id}: {$entry->question->text}</a>
+			<a n:href="Entry:default $entry->id">KB {$entry->id}: {$entry->question->text}</a>
 		</li>
 	</ul>
 </div>

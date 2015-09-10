@@ -12,7 +12,7 @@ use Model\Entity\Tag;
 use Model\Entity\Checklist;
 use DateTime;
 
-class KbPresenter extends BasePresenter
+class EntryPresenter extends BasePresenter
 {
     /** @var \Model\Repository\EntryRepository @inject */
     public $entryRepository;
@@ -89,9 +89,9 @@ class KbPresenter extends BasePresenter
         $this->entryRepository->persist($entry);
 
         if ($httpRequest->isAjax()) {
-            $this->sendResponse(new JsonResponse(array('redirect' => $this->link('Kb:edit', $entry->id))));
+            $this->sendResponse(new JsonResponse(array('redirect' => $this->link('Entry:edit', $entry->id))));
         } else {
-            $this->redirect('Kb:edit', $entry->id);
+            $this->redirect('Entry:edit', $entry->id);
         }
     }
 

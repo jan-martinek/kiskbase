@@ -30,12 +30,12 @@ services:
 		setup:
 			- allowUserCreation(%userCreationAllowed%)
 	kbFilter: 
-		class: App\Model\KbFilter
+		class: App\Model\EntryFilter
 		setup:
 			- setQuestionOpenings(%questionOpenings%)
 	nette.latteFactory:
 		setup:
-			- addFilter(renderKb, [@kbFilter, process])
+			- addFilter(renderEntry, [@kbFilter, process])
 
 extensions:
 	translation: Kdyby\Translation\DI\TranslationExtension

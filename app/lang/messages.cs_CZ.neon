@@ -29,7 +29,7 @@ app:
 kb:
 	kb: "KB" 
 	kiskbase: "KiskBase"
-	newKb: "Nová otázka"
+	newEntry: "Nová otázka"
 	editor: "Tento záznam spravuje"
 	authoredBy: "Poslední úprava"
 	editingMode: "Úpravy"

@@ -21,7 +21,7 @@
 			{if !trim($entry->answer->text)}
 				<p class="empty">{_messages.kb.emptyEntry}</p>
 			{/if}
-			{!$entry->answer->text|renderKb:$presenter}
+			{!$entry->answer->text|renderEntry:$presenter}
 			
 		</div>
 	</div>
@@ -39,7 +39,7 @@
 		{if $related}	
 			<ul>
 				<li n:foreach="$related as $entry">
-					<a n:href="Kb:default $entry->id">{$entry->question->text}</a> 
+					<a n:href="Entry:default $entry->id">{$entry->question->text}</a> 
 					{foreach $entry->tags as $tag}
 					<a n:href="Search:tag $tag->text" class="hashtag">#{$tag->text}</a>{sep}, {/sep}
 					{/foreach}

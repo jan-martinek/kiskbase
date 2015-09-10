@@ -17,10 +17,10 @@ class RouterFactory
     {
         $router = new RouteList();
         $router[] = new Route('/', 'Homepage:default');
-        $router[] = new Route('/new', 'Kb:new');
-        $router[] = new Route('/<id [0-9]+>', 'Kb:default');
-        $router[] = new Route('/edit/<id [0-9]+>', 'Kb:edit');
-        $router[] = new Route('/print/', 'Kb:print');
+        $router[] = new Route('/new', 'Entry:new');
+        $router[] = new Route('/<id [0-9]+>', 'Entry:default');
+        $router[] = new Route('/edit/<id [0-9]+>', 'Entry:edit');
+        $router[] = new Route('/print/', 'Entry:print');
         $router[] = new Route('/s/<query>', 'Search:default');
         $router[] = new Route('/tag/<tagText>', 'Search:tag');
         $router[] = new Route('/table/', 'Table:default');

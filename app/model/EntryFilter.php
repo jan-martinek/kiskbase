@@ -3,8 +3,9 @@
 namespace App\Model;
 
 use Nette\Utils\Html;
+/*use Masterminds\HTML5;*/
 
-class KbFilter extends \Nette\Object
+class EntryFilter extends \Nette\Object
 {
     private $queries;
     private $text;
@@ -30,6 +31,14 @@ class KbFilter extends \Nette\Object
 
     public function process($text, $presenter)
     {
+        /*$html5 = new HTML5();
+        $dom = $html5->loadHTML($text);
+        dump($html5->saveHTML($dom));
+        die;*/
+        
+        
+        
+       
         $this->queries = array();
         $this->text = $text;
         $this->presenter = $presenter;
