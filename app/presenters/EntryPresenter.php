@@ -10,6 +10,7 @@ use Model\Entity\Answer;
 use Model\Entity\Question;
 use Model\Entity\Tag;
 use Model\Entity\Checklist;
+use Model\Entity\EditorHistory;
 use DateTime;
 
 class EntryPresenter extends BasePresenter
@@ -31,6 +32,9 @@ class EntryPresenter extends BasePresenter
 
     /** @var \Model\Repository\ChecklistRepository @inject */
     public $checklistRepository;
+    
+    /** @var \Model\Repository\EditorHistoryRepository @inject */
+    public $editorHistoryRepository;
 
     private $acceptedDomains;
 
@@ -49,6 +53,14 @@ class EntryPresenter extends BasePresenter
             throw new BadRequestException();
         }
         $this->template->allTags = $this->tagRepository->findAll();
+        $this->template->entry = $entry;
+    }
+
+    public function renderParams($id)
+    {
+        if (!$entry = $this->entryRepository->find($id)) {
+            throw new BadRequestException();
+        }
         $this->template->entry = $entry;
     }
 
@@ -126,6 +138,37 @@ class EntryPresenter extends BasePresenter
 
         if ($httpRequest->isAjax()) {
             $this->sendResponse(new JsonResponse(array('success' => true)));
+        }
+    }
+    
+    protected function createComponentParamsForm()
+    {
+        $users = $this->userRepository->findAllSimple();
+        
+        $form = new Form();
+        $form->addSelect('editor', 
+            $this->translator->translate('messages.kb.params.editor'), $users);
+        $form->addSubmit('submit', $this->translator->translate('messages.kb.params.save'));
+        $form->addHidden('entry_id');
+        $form->onSuccess[] = array($this, 'paramsFormSucceeded');
+        return $form;
+    }
+    
+    public function paramsFormSucceeded(Form $form, $values)
+    {
+        $entry = $this->entryRepository->find($values->entry_id);
+        
+        if ($entry->editor->id != $values->editor) {
+            $editor = $this->userRepository->find($values->editor);
+            $entry->editor = $editor;
+            $this->entryRepository->persist($entry);
+            
+            $editorHistory = new EditorHistory();
+            $editorHistory->entry = $entry;
+            $editorHistory->editor = $editor;
+            $editorHistory->assignedBy = $this->userRepository->find($this->user->getId());
+            $editorHistory->date = new DateTime;
+            $this->editorHistoryRepository->persist($editorHistory);
         }
     }
     

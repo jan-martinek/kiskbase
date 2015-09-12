@@ -28,8 +28,8 @@
 	<div class="columns">
 		<hr>
 		<dl>
-			<dt>{_messages.kb.editor}<dt> 
-			<dd>{$entry->editor->name}</dd>
+			<dt>{_messages.kb.editor.title}<dt> 
+			<dd>{$entry->editor->name} <a n:href="Entry:params $entry->id">{_messages.kb.changeSetting}</a></dd>
 			<dt>{_messages.kb.authoredBy}<dt>
 			<dd>{$entry->answer->created_at|date:'j. n. Y'}, {$entry->answer->authoredBy->name}</dd>
 		</dl>	

@@ -18,8 +18,11 @@ class RouterFactory
         $router = new RouteList();
         $router[] = new Route('/', 'Homepage:default');
         $router[] = new Route('/new', 'Entry:new');
-        $router[] = new Route('/<id [0-9]+>', 'Entry:default');
-        $router[] = new Route('/edit/<id [0-9]+>', 'Entry:edit');
+        $router[] = new Route('/[<action>/][<id [0-9]+>]', array(
+            'presenter' => 'Entry',
+            'action' => 'default',
+            'id' => NULL
+        ));
         $router[] = new Route('/print/', 'Entry:print');
         $router[] = new Route('/s/<query>', 'Search:default');
         $router[] = new Route('/tag/<tagText>', 'Search:tag');

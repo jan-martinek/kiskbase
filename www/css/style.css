@@ -1,3 +1,4 @@
+@charset "UTF-8";
 meta.foundation-version {
   font-family: "/5.5.2/"; }
 
@@ -6411,6 +6412,12 @@ p .hljs, blockquote .hljs, li .hljs {
   border: 0;
   background: transparent; }
 
+.editor {
+  color: #999;
+  display: none; }
+  .editor::before {
+    content: "— "; }
+
 ul.checklist {
   list-style-type: none; }
   ul.checklist ul, ul.checklist ol {
@@ -6418,7 +6425,7 @@ ul.checklist {
     padding-left: 40px; }
 
 .medium-insert-buttons {
-  margin-left: -65px;
+  margin-left: -60px;
   opacity: .5; }
 
 /*# sourceMappingURL=style.css.map */

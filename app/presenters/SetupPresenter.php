@@ -168,6 +168,24 @@ class SetupPresenter extends Nette\Application\UI\Presenter
           `picture` varchar(255) COLLATE $collate NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=$collate;");
+        
+        if ($dropTables) {
+            $this->connection->query('DROP TABLE IF EXISTS `editorhistory`;');
+        }
+        $this->connection->query("CREATE TABLE `editorhistory` (
+          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `entry_id` int(10) unsigned NOT NULL,
+          `editor_id` int(11) NOT NULL,
+          `assigned_by_id` int(11) NOT NULL,
+          `date` datetime NOT NULL,
+          PRIMARY KEY (`id`),
+          KEY `assigned_by_id` (`assigned_by_id`),
+          KEY `entry_id` (`entry_id`),
+          KEY `editor_id` (`editor_id`),
+          CONSTRAINT `editorhistory_ibfk_1` FOREIGN KEY (`editor_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+          CONSTRAINT `editorhistory_ibfk_2` FOREIGN KEY (`assigned_by_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+          CONSTRAINT `editorhistory_ibfk_3` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=$collate;");
 
         // example table
         if ($dropTables) {

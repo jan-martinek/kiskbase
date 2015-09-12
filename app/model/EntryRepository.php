@@ -51,3 +51,11 @@ class EntryRepository extends Repository
         return $this->createEntities($rows);
     }
 }
+
+class EditorHistoryRepository extends Repository
+{
+   
+}
+
+
+

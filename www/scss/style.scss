@@ -116,7 +116,14 @@ p .hljs, blockquote .hljs, li .hljs {
 	padding: 0; border: 0;
 	background: transparent;
 }
-
+.editor {
+	color: #999;
+	display: none;
+	
+	&::before {
+		content: "— ";
+	}
+}
 ul.checklist {
 	list-style-type: none;
 	

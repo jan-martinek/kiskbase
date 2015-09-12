@@ -16,12 +16,14 @@ services:
 	- Model\Repository\TagRepository
 	- Model\Repository\UserRepository
 	- Model\Repository\ChecklistRepository
+	- Model\Repository\EditorHistoryRepository
 	- Model\Entity\Entry
 	- Model\Entity\Answer
 	- Model\Entity\Question
 	- Model\Entity\Tag
 	- Model\Entity\User
 	- Model\Entity\Checklist
+	- Model\Entity\EditorHistory
 	- Model\TableManager
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter

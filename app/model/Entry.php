@@ -2,6 +2,8 @@
 
 namespace Model\Entity;
 
+use DateTime;
+
 /**
  * @property int $id
  * @property User $editor m:hasOne(editor_id)
@@ -23,4 +25,17 @@ class Entry extends \LeanMapper\Entity
 
         return $tagIds;
     }
+}
+
+
+/**
+ * @property int $id
+ * @property Entry $entry m:hasOne(entry_id)
+ * @property User $editor m:hasOne(editor_id)
+ * @property User $assignedBy m:hasOne(assigned_by_id)
+ * @property DateTime $date
+ */
+class EditorHistory extends \LeanMapper\Entity
+{
+
 }

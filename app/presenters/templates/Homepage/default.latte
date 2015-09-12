@@ -5,12 +5,15 @@
 	<div class="row">
 		<div class="columns large-8">
 			<h2>{_messages.app.allEntries}</h2>
+			<p><label><input type="checkbox" onchange="$('.editor').toggle();"> {_messages.app.showEditors}</label></p>
 			<ul>
 				<li n:foreach="$entries as $namespaceName => $namespace">
 					<strong>{if $namespaceName === '_none'}{_messages.kb.noNamespaceGiven}{else}{$namespaceName}{/if}</strong>
 					<ul>
 						<li n:foreach="$namespace as $entry" n:ifset="$entry->question->text">
-							KB {$entry->id} <a n:href="Entry:default $entry->id">{$entry->question->extractTextWithoutNamespace()}</a>
+							KB {$entry->id} 
+							<a n:href="Entry:default $entry->id">{$entry->question->extractTextWithoutNamespace()}</a>
+							<span class="editor">{$entry->editor->name}</span>
 						</li>
 					</ul>
 				</li>

@@ -60,6 +60,15 @@ class UserRepository extends Repository implements Nette\Security\IAuthenticator
             throw new DuplicateNameException();
         }
     }
+    
+    public function findAllSimple($orderBy = 'name') 
+    {
+        $query = $this->connection->select('*')->from($this->getTable());
+        if ($orderBy) {
+            $query->orderBy($orderBy);
+        }
+        return $query->fetchPairs('id', 'name');
+    }
 }
 
 class DuplicateNameException extends \Exception
