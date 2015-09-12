@@ -9,7 +9,7 @@ class TableManager extends Nette\Object
     /** @var \DibiConnection @inject */
     public $connection;
 
-    private $restrictedTables = array('answer', 'entry', 'entry_tag', 'question', 'tag', 'user', 'checklist');
+    private $restrictedTables = array('answer', 'entry', 'entry_tag', 'editorhistory', 'question', 'tag', 'user', 'checklist');
 
     public function __construct(\DibiConnection $connection)
     {
