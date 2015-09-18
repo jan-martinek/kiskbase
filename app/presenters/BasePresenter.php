@@ -22,7 +22,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         parent::startup();
 
         if (!$this->user->isLoggedIn() && !($this->getName() === 'Login')) {
-            $this->redirect('Login:default');
+            $this->redirect('Login:default', $this->storeRequest('+ 48 hour'));
         }
     }
 

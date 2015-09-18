@@ -13,13 +13,16 @@ class LoginPresenter extends BasePresenter
 
     /** @var GoogleUserRepository @inject */
     public $userRepository;
+    
+    /** @persistent */
+    public $backlink;
 
-    public function renderDefault()
+    public function renderDefault($backlink = null)
     {
         $this->template->userCreationAllowed = $this->userRepository->isUserCreationAllowed();
     }
 
-    public function handleFakeLogin()
+    public function handleFakeLogin($backlink = null)
     {
         if ($this->context->parameters['debugMode']) {
             $this->user->login(new Identity(1, array(), array(
@@ -27,7 +30,11 @@ class LoginPresenter extends BasePresenter
                 'roles' => array(),
                 'name' => 'FakeLogin', ))
             );
-            $this->redirect('Homepage:default');
+            if (!empty($this->backlink)) {
+                $this->redirect($this->restoreRequest($this->backlink));
+            } else {
+                $this->redirect('Homepage:default');    
+            }
         }
     }
 
@@ -41,8 +48,7 @@ class LoginPresenter extends BasePresenter
 
             if (!$google->getUser()) {
                 $self->flashMessage('Sorry, Google authentication failed (1).');
-                $self->redirect('Login:default');
-
+                $self->redirect('Login:default', $self->backlink);
                 return;
             }
 
@@ -54,8 +60,7 @@ class LoginPresenter extends BasePresenter
                         $existing = $self->userRepository->registerFromGoogle($google->getUser(), $me);
                     } else {
                         $self->flashMessage('Sorry, Google authentication failed (2).');
-                        $self->redirect('Login:default');
-
+                        $self->redirect('Login:default', $self->backlink);
                         return;
                     }
                 }
@@ -63,11 +68,18 @@ class LoginPresenter extends BasePresenter
                 $self->userRepository->updateGoogleAccessToken($google->getUser(), serialize($google->getAccessToken()));
                 $self->user->login(new Identity($existing->id, $existing->roles, $existing));
             } catch (\Exception $e) {
+                $self->user->logout();
                 \Tracy\Debugger::log($e, 'google');
                 $self->flashMessage('Sorry, Google authentication failed hard.');
             }
-
-            $self->redirect('Homepage:default');
+            
+            if (!empty($self->backlink)) {
+                $self->redirect($self->restoreRequest($self->backlink));
+            } else {
+                $self->redirect('Homepage:default');    
+            }
+            
+            
         };
 
         return $dialog;
