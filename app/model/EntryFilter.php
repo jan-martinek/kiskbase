@@ -109,7 +109,7 @@ class EntryFilter extends \Nette\Object
     public function activateHashtags()
     {
         $replacements = array();
-        preg_match_all('/#([\p{L}-]+)/u', $this->text, $matches);
+        preg_match_all('/[>\s]#([\p{L}-]+)/u', $this->text, $matches);
 
         foreach ($matches[1] as $tag) {
             $replacements['#'.$tag] = '<a class="hashtag" href="'.$this->presenter->link('Search:tag', $tag).'">#'.$tag.'</a>';
