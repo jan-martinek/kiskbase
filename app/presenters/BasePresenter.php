@@ -5,6 +5,7 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use DibiConnection;
+use DateTime;
 
 /**
  * Base presenter for all application presenters.
@@ -16,13 +17,19 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     /** @var \Kdyby\Translation\Translator @inject */
     public $translator;
+    
+    /** @var \Nette\Http\Response @inject */
+    public $response;
 
     public function startup()
     {
         parent::startup();
 
         if (!$this->user->isLoggedIn() && !($this->getName() === 'Login')) {
-            $this->redirect('Login:default', $this->storeRequest('+ 48 hour'));
+            $backlink = $this->storeRequest('+ 48 hour');
+            $this->response->setCookie('googleBacklink', $backlink, new DateTime('+ 5 minute'));
+            
+            $this->redirect('Login:default', $backlink);
         }
     }
 

@@ -16,6 +16,13 @@ class LoginPresenter extends BasePresenter
     
     /** @persistent */
     public $backlink;
+    
+    /** @var \Nette\Http\Request @inject */
+    public $request;
+    
+    public function actionDefault($backlink = null) {
+        
+    }
 
     public function renderDefault($backlink = null)
     {
@@ -46,6 +53,12 @@ class LoginPresenter extends BasePresenter
         $dialog->onResponse[] = function (LoginDialog $dialog) use ($self) {
             $google = $dialog->getGoogle();
 
+            if (empty($self->backlink)) {                
+                if ($self->request->getCookie('googleBacklink')) {
+                    $self->backlink = $self->request->getCookie('googleBacklink');
+                }
+            }
+
             if (!$google->getUser()) {
                 $self->flashMessage('Sorry, Google authentication failed (1).');
                 $self->redirect('Login:default', $self->backlink);
@@ -60,6 +73,7 @@ class LoginPresenter extends BasePresenter
                         $existing = $self->userRepository->registerFromGoogle($google->getUser(), $me);
                     } else {
                         $self->flashMessage('Sorry, Google authentication failed (2).');
+                        $self->user->logout();
                         $self->redirect('Login:default', $self->backlink);
                         return;
                     }
