@@ -205,7 +205,9 @@ var KiskBase = {
 			
 			$('body').on('click', '.createChecklist', function(e) {
 				var name = prompt(KiskBase.translations.nameChecklist);
-				KiskBase.ChecklistManager.sendCreateRequest($(this).next().html(), name);
+				if (name) {
+					KiskBase.ChecklistManager.sendCreateRequest($(this).next().html(), name);	
+				}
 				e.preventDefault();
 			});
 		},
